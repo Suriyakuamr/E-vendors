@@ -1,0 +1,77 @@
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+     <style>
+        .big {
+            display: block;
+        }
+        .small {
+            display: none;
+        }
+        body {
+            overflow-x: hidden;
+        }
+        @media only screen and (max-width: 768px) {
+            .big {
+                display: none;
+            }
+            .small {
+                display: block;
+            }
+            body {
+                overflow-x: hidden;
+            }
+        }
+        /* Adjustments for smaller screens */
+        @media only screen and (max-width: 576px) {
+            .container {
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+            .row {
+                margin-left: -5px;
+                margin-right: -5px;
+            }
+            .col-xs-6 {
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+     </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <h3 style="color: black;">Ordered Successfully!</h3>  
+            <a href="{{ url_for('index') }}" class="btn" style="color: rgb(8, 8, 8); border-radius: 30px; border: 0.01px solid black;">
+                <span class="glyphicon glyphicon-home"></span> Go to Home
+            </a>
+        </div>
+        <div class="row" style="display: flex; align-items: center; justify-content: center;">
+            {% for product_id, item in selected_items.items() %}
+            <div class="col-xs-6"  >
+                <a href="{{ url_for('product_details', product_id=product_id) }}" style="text-decoration: none; color: inherit;">
+                    <img src="{{ item['product'].image }}" class="img-responsive big" alt="{{ item['product'].name }}" style="height: 47vh; width: 60%;">
+                    <img src="{{ item['product'].image }}" class="img-responsive small" alt="{{ item['product'].name }}" style="padding: 20px;height: 37vh; width: 100%;">
+                    <h5 style="color: black;"> <strong> {{ item['product'].name }}</strong></h5>
+                    <h5 style="color: black;">  <strong>RS.</strong>{{ item['product'].price }}</h5>
+                    <h5 style="color: black;"> <strong>Quantity:</strong> {{ item['quantity'] }}</h5>
+                    <h5 style="color: black;"> <strong>Product total price: RS.</strong>{{ item['quantity'] * item['product'].price }}</h5>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.min.js.js"></script>
+</body>
+</html>
+
+ 

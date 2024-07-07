@@ -1,0 +1,46 @@
+  
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>E-vendors/Filtered Products</title>
+
+    <style>
+        .col-xs-4:hover {
+            background-color: rgb(245, 241, 241); /* Change background color to white on hover */
+        }
+    </style>
+</head>
+<body>
+     
+<div class="container">
+    <h4>Filtered Products - {{ product_name }}...</h4>
+    {% if products %}
+    <div class="row">
+        {% for product in products %}
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6" style="border-radius: 12px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px;">
+            <a href="{{ url_for('product_details', product_id=product.id) }}" style="text-decoration: none;">
+                <img class="img-responsive" src="{{ product.image }}" alt="{{ product.name }}" style="height: 19vh; width: 90%;">
+                <h5 style="color: black; text-align: center;" class="card-title">{{ product.name }}</h5>
+                <h4 style="color: black; text-align: center;" class="card-text">Price: RS.{{ product.price }}</h4>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p>No results found.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>
+
+
+  
+
+ 

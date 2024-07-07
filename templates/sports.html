@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> E-vendors/Sports & Items</title>
+    <script src="https://unpkg.com/swiper@6.8.4/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@6.8.4/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/mobiles.css">
+    <style>
+      .big
+      {
+        display: block;
+      }
+      .small
+      {
+        display: none;
+      }
+      body
+      {
+        overflow-x: hidden;
+      }
+      @media only screen and (max-width: 768px) {
+        .big
+        {
+          display: none;
+        }
+        .small
+        {
+          display: block;
+        }
+        body
+      {
+        overflow-x: hidden;
+      }
+      }
+    </style>
+  </head>
+  
+  <body>
+     <!--nav-->
+    <nav class="navbar   navbar-default   navbar-fixed-top" id="topnav" style=" background:white">
+      <div class="container-fluid" style="margin-top: 10px;display: flex;align-items: center;justify-content: center;">
+         <div class="row">
+  
+        <!--title-->
+        <div class="col-xs-3 title">
+           <h4 style="color: black; font-family: Sacramento, cursive;">  Sports & Items  </h4> 
+        </div>
+  
+        <div class="col-xs-2 b-title">
+           <h4 style="color: black; font-family: Sacramento, cursive;margin-top: 15px;margin-right: 220px;">  Sports & Items  </h4>
+       </div>
+  
+         
+       <!--search bar FOR BIG SCREEN-->
+  <div class="col-xs-4  big">
+  <a id="searchLink" href="{{ url_for('searchbar') }}" style="text-decoration: none;">
+      <form class="navbar-form navbar-left search" action="{{ url_for('search') }}" id="searchForm" method="GET" >
+          <div class="input-group  big">
+            <input id="searchInput" type="text" class="form-control" placeholder="Search For products,Brands and More" name="search">
+               <div class="input-group-btn">
+                  <button id="searchButton" class="btn btn-default" type="submit">
+                      <i class="glyphicon glyphicon-search"></i>
+                  </button>
+              </div>
+          </div>
+      </form>
+  </a>
+  </div>
+  
+  
+  <!--CART-->
+       <div class="col-xs-3">        
+          <a href="{{ url_for('cart') }}" style="display: flex; align-items: center; justify-content: space-around;" class="navbar-brand cart" id="my">
+            <span id="cart-icon" class="glyphicon glyphicon-shopping-cart"  style="color: black;margin-bottom: 8px;"></span>
+            <h4 id="cart-text" style="color: black;margin-left: 5px;   ">Cart</h4>
+        </a>
+       </div>
+  
+        <!--accout-->
+        
+    <div class="col-xs-3"   >
+    
+     {% if current_user.is_authenticated %}
+     
+   
+   <div class="dropdown">
+    
+    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+    style="background-color:rgb(255, 255, 255); color:rgb(0, 0, 0);margin-left: 2px;">
+  <h5>
+    <span class="glyphicon glyphicon-user" style="display: inline-block; color:black;">Account</span>
+    <span class="caret"></span>
+  </h5>  
+  </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <ul class="list-unstyled" style="text-align: center;">
+        <li>
+           <a href="{{ url_for('profile', user_id=current_user.id) }}">
+      <h5 style="display: block;color: black;">  <span class="glyphicon glyphicon-user" style="display: inline-block;color:black;"> My Profile</h5></span></a></li>
+        <li><a class="dropdown-item" href="{{ url_for('logout') }}"><h5 style="color: black;"> Logout <span class="glyphicon glyphicon-log-out"></span> </h5> </a></li>
+        <li><a class="dropdown-item" href="{{ url_for('dashboard') }}"><h5 style="color: black;"> Orders</h5></a></li>
+      </ul>
+    </div>
+  </div>
+  
+  
+  {% else %}
+   
+  <a  href="{{ url_for('login') }}" style="display: flex; align-items: center; justify-content: space-around;" class="navbar-brand cart" id="my">
+  <span style="display: inline-block; color:black;margin-bottom: 8px;"  class="glyphicon glyphicon-log-in"></span>
+  <h5 id="cart-text" style="color: black;margin-left: 5px;   ">LOGIN</h5>
+  </a>
+    
+  {% endif %}
+  </div>
+   
+       
+  
+        
+  <!--2 nd for search bar small screen-->
+         
+  <div class="col-xs-3 sear">
+    <a id="searchLink" href="{{ url_for('searchbar') }}" style="text-decoration: none;">
+       
+              <div class="input-group-btn">
+                <button id="searchButton" class="btn btn-default " type="submit" style=" font-size: 20px;border: none;margin-top: 10px;">
+                     
+                  <span class="glyphicon glyphicon-search"></span>
+              </button>
+              </div>
+           
+  </a>
+   </div>
+         
+  
+      </div>    
+     
+      </div>
+  </nav>
+  <!--slide1-->
+
+  <div class="container"  style="margin-top: 100px;">
+    
+    <div class="row">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+              {% for product in products %}
+
+            {% if loop.index == 26   %}
+
+              <div class="swiper-slide" style="display: flex; align-items: center; justify-content: center;">
+                <div class="box" style="height: 44vh;width: 100%; background: linear-gradient(to right, rgb(247, 250, 250), rgb(42, 42, 43));">
+                  <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+                    <img src="{{product.image}}" style="height:39vh;width:46%;;"  class="  img-responsive"  >
+              
+                    <h5 style="font-family:Arial, Helvetica, sans-serif;color: rgb(255, 252, 249);position: absolute;bottom:75px;right: 120px;"> <strong>  PERFORMANCE</strong> </h5>
+                    <h1 style="font-family:Arial, Helvetica, sans-serif;color: rgb(255, 252, 249);position: absolute;bottom:35px;right: 50px;"> <strong>  BICYCLES </strong> </h1>
+                  </a>
+                </div>
+              </div>
+              
+
+     {% elif loop.index == 123  %}
+              <div class="swiper-slide" style="display: flex; align-items: center; justify-content: center;">             
+                      <div class="box" style="height: 44vh;width: 100%; background: linear-gradient(to top, rgb(0, 0, 0), rgb(255, 98, 7));">
+                        <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+                          <img src="https://ik.imagekit.io/pve74zqrg/spor/badmitton.png?updatedAt=1710655070013" style="height:43vh;width:40%; " alt="Chicago" class="  img-responsive"  >
+                         <h5 style="font-family:Arial, Helvetica, sans-serif;color: white;position: absolute;bottom:45px;right:  55px;">  <strong>  Crush Your 2023 <br> FITNESS GOALS!</strong> <br>
+                          </h5>
+                           <button  type="button" class="btn btn-responsive" style=" position: absolute; bottom: 28px;right: 65px;background-color: rgb(89, 78, 255);
+                           width: 76px;height: 22px;display:flex;justify-content:center;  align-items: center; "  ><h6 style="color: rgb(245, 245, 255);">
+                             Upto 70% Off </h6> </button> </a> 
+                      </div>
+                    </div>
+                    
+               
+                    {% elif loop.index == 4  %}
+              <div class="swiper-slide" style="display: flex; align-items: center; justify-content: center;">
+                <div class="box" style="height: 44vh;width: 100%; background: linear-gradient(to right, rgb(143, 253, 253), rgb(255, 98, 7));">
+                  <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;display: flex; align-items: center; justify-content: center;"> 
+                    <img src="{{product.image}}" style="height:39vh;width:30%;" alt="Chicago" class="big  img-responsive"  >
+                    <img src="{{product.image}}" style="height:39vh;width:40%;" alt="Chicago" class="small  img-responsive"  >
+                   
+                      <h1 style="font-family:Arial, Helvetica, sans-serif;color: rgb(255, 255, 255);position: absolute;bottom:65px;right:  122px;"> <strong>Sport?</strong></h1>
+                      <h6 style="font-family:Arial, Helvetica, sans-serif;color: rgb(255, 252, 249);position: absolute;bottom:40px;right:  143px;">    min 50% off <br> on Men's shoes
+                      </h6>
+                      </a> 
+                   
+                </div>
+              </div>
+              {% endif %}
+              {% endfor %}
+
+
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+ 
+<br>
+
+<!--6 images with background-->
+<div class="container">
+  <div class="row" style="display: flex;align-items: center;justify-content:space-between; "> 
+  
+  <div class="col-xs-6" >
+   <a href="#" style="  text-decoration: none; "> <h6 style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;display: flex;align-items: center;justify-content: center; background-color: rgb(14, 14, 14);color: rgb(247, 247, 2);border-radius: 6px;width: 100px;">SPORTS  HUB</h6>  </a>
+  </div>
+  <div class="col-xs-6">
+   <a href="#" style=" text-decoration: none; "> <h6  ><small>ONE STOP DESTINATION FOR ALL SPORTS </small>   </h6> </a>
+  </div>
+</div>
+<div class="row">
+{% for product in products %}
+
+  {% if loop.index == 115   %}
+  <div class="col-xs-4" style="  display: flex;align-items: center;justify-content: center;">
+    <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+    <div class="cir" style="display: flex;align-items: center;justify-content: center;
+        border-radius: 50%;width: 85px;height: 80px; background: linear-gradient(to right, rgb(155, 253, 253), rgb(233, 239, 245)); ">
+        
+       <img src="{{ product.image}}" class="img-responsive" style="height: 14vh;width: 100%; ">
+      </div>
+       <h5 style=" border-radius: 6px;width: 80px;text-align: center;  color: rgb(15, 15, 15);"><small>{{product.name}} </small> <br> <strong>From RS.{{product.price}}</strong></h5> </a>
+     
+  </div>  
+   
+  {% elif loop.index == 116   %}
+  <div class="col-xs-4" style="  display: flex;align-items: center;justify-content: center;">
+    <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+    <div class="cir" style="display: flex;align-items: center;justify-content: center;
+        border-radius: 50%;width: 85px;height: 80px; background: linear-gradient(to right, rgb(155, 253, 253), rgb(233, 239, 245)); ">
+        
+       <img src="{{ product.image}}" class="img-responsive" style="height: 14vh;width: 100%; ">
+      </div>
+       <h5 style=" border-radius: 6px;width: 80px;text-align: center;  color: rgb(15, 15, 15);"><small>{{product.name}} </small> <br> <strong>From RS.{{product.price}}</strong></h5> </a>
+     
+  </div>    
+
+  {% elif loop.index == 117   %}
+  <div class="col-xs-4" style="  display: flex;align-items: center;justify-content: center;">
+    <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+    <div class="cir" style="display: flex;align-items: center;justify-content: center;
+        border-radius: 50%;width: 85px;height: 80px; background: linear-gradient(to right, rgb(155, 253, 253), rgb(233, 239, 245)); ">
+        
+       <img src="{{ product.image}}" class="img-responsive" style="height: 14vh;width: 100%; ">
+      </div>
+       <h5 style=" border-radius: 6px;width: 80px;text-align: center;  color: rgb(15, 15, 15);"><small>{{product.name}} </small> <br> <strong>From RS.{{product.price}}</strong></h5> </a>
+     
+  </div>   
+
+  
+  </div>
+ <br>
+<br>
+<br>
+ 
+<div class="row" >
+  
+  {% elif loop.index == 118   %}
+  <div class="col-xs-4" style="  display: flex;align-items: center;justify-content: center;">
+    <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+    <div class="cir" style="display: flex;align-items: center;justify-content: center;
+        border-radius: 50%;width: 85px;height: 80px; background: linear-gradient(to right, rgb(155, 253, 253), rgb(233, 239, 245)); ">
+        
+       <img src="{{ product.image}}" class="img-responsive" style="height: 9vh;width: 70%; ">
+      </div>
+       <h5 style=" border-radius: 6px;width: 80px;text-align: center;  color: rgb(15, 15, 15);"><small>{{product.name}} </small> <br> <strong>From RS.{{product.price}}</strong></h5> </a>
+     
+  </div>   
+
+  {% elif loop.index == 119   %}
+  <div class="col-xs-4" style="  display: flex;align-items: center;justify-content: center;">
+    <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+    <div class="cir" style="display: flex;align-items: center;justify-content: center;
+        border-radius: 50%;width: 85px;height: 80px; background: linear-gradient(to right, rgb(155, 253, 253), rgb(233, 239, 245)); ">
+        
+       <img src="{{ product.image}}" class="img-responsive" style="height: 14vh;width: 100%; ">
+      </div>
+       <h5 style=" border-radius: 6px;width: 80px;text-align: center;  color: rgb(15, 15, 15);"><small>{{product.name}} </small> <br> <strong>From RS.{{product.price}}</strong></h5> </a>
+     
+  </div>   
+
+
+  {% elif loop.index == 120   %}
+  <div class="col-xs-4" style="  display: flex;align-items: center;justify-content: center;">
+    <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+    <div class="cir" style="display: flex;align-items: center;justify-content: center;
+        border-radius: 50%;width: 85px;height: 80px; background: linear-gradient(to right, rgb(155, 253, 253), rgb(233, 239, 245)); ">
+        
+       <img src="{{ product.image}}" class="img-responsive" style="height: 14vh;width: 100%; ">
+      </div>
+       <h5 style=" border-radius: 6px;width: 80px;text-align: center;  color: rgb(15, 15, 15);"><small>{{product.name}} </small> <br> <strong>From RS.{{product.price}}</strong></h5> </a>
+     
+  </div>   
+
+   
+  {% endif %}
+  {% endfor %}
+</div>
+</div>
+<br>
+<br>
+<br>
+<br>
+     
+
+    <div class="container" style="  background: linear-gradient(to bottom, rgb(105, 107, 218), rgb(135, 174, 214));">
+      <h6 style="font-family :cursive;background-color: rgb(255, 255, 28);color: rgb(49, 49, 212);width: 100px;display: flex;align-items: center;justify-content: center;">
+        <strong>RESOLUTION</strong>  </h6>
+      <div class="row"  > 
+      
+      <div class="col-xs-12" >
+       <a href="#" style="  text-decoration: none; "> <h2 style="font-family  :'Courier New', Courier, monospace;
+       display: flex;align-items: center;justify-content: center; color: rgb(247, 247, 2); "><strong>PLAY SPORTS</strong> </h2>  </a>
+      </div>
+    
+      <div class="col-xs-12" style="display: inline;width: 360px;" >
+       <a href="#" style=" text-decoration: none; "  > 
+        <h6 style="color:rgb(255, 255, 82) ; " > Did You Know? Sports Reduces Stres & Boosts Self-confidence  </h6> </a>
+      </div>
+    </div>
+    <br>
+    
+    
+    <div class="row" style="display: flex;justify-content:space-between;">
+      {% for product in products %}
+
+  {% if loop.index == 121  %}
+
+      <div class="col-xs-3" style="  display: flex;align-items: center;justify-content: center;
+      border-radius: 50%;width: 85px;height: 80px; background:  rgb(69, 71, 212); ">
+      <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+           <img src="{{product.image}}" class="img-responsive" style="height: 12vh;width: 130%; ">
+            <h5 style="position:absolute;top:70px;border-radius: 6px;width: 80px; left: 10px;  color: rgb(247, 247, 2)"><strong> {{product.name}}</strong>  <br> 
+           </h5>  <h6 style="position:absolute;top:90px;border-radius: 6px;width: 100px;left: 2px; color:rgb(233, 239, 245) ;">  From RS.{{product.price}}  </h6> </a> 
+      </div>
+      {% elif loop.index == 122  %}
+      <div class="col-xs-3" style="  display: flex;align-items: center;justify-content: center;position:relative;bottom: 23px;
+      border-radius: 50%; width: 85px;height: 80px; background:  rgb(69, 71, 212); ">
+      <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+           <img src="{{product.image}}" class="img-responsive" style="height: 12vh;width: 130%; ">
+            <h5 style="position:absolute;top:70px;border-radius: 6px;width: 80px;left: 10px;  color: rgb(247, 247, 2)"> <strong> {{product.name}}</strong> <br>     </h5> 
+           <h6 style="position:absolute;top:90px;border-radius: 6px;width: 100px;left: 7px; color:rgb(233, 239, 245) ;">  From RS.{{product.price}}  </h6></a> 
+      </div>
+      {% elif loop.index == 123  %}
+      <div class="col-xs-3" style="  display: flex;align-items: center;justify-content: center;
+      border-radius: 50%; width: 85px;height: 80px ;background:  rgb(69, 71, 212);">
+      <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+           <img src="{{product.image}}" class="img-responsive" style="height: 12vh;width: 130%; ">
+            <h5 style="position:absolute;top:70px;border-radius: 6px;width: 80px; left: 10px;   color: rgb(247, 247, 2)">  <strong> {{product.name}} </strong> <br>  </h5> 
+           <h6 style="position:absolute;top:90px;border-radius: 6px;width: 100px;left: 7px; color:rgb(233, 239, 245) ;">  From RS.{{product.price}}  </h6> </a>
+      </div>
+    </div>
+    <br>
+    <br>
+     
+     
+    <div class="row" style="display: flex;justify-content:space-between;">
+      {% elif loop.index == 124  %}
+      <div class="col-xs-3" style="  display: flex;align-items: center;justify-content: center;
+      border-radius: 50%;width: 85px;height: 80px;  background:  rgb(69, 71, 212); ">
+      <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+           <img src="{{product.image}}" class="img-responsive" style="height: 10vh;width: 130%; ">
+             <h5 style="position:absolute;top:70px;border-radius: 6px;width: 80px; left: 10px;  color: rgb(247, 247, 2)"> <strong>  {{product.name}} </strong> </h5> 
+           <h6 style="position:absolute;top:90px;border-radius: 6px;width: 100px; color:rgb(233, 239, 245) ;left: 2px;">  From RS.{{product.price}}  </h6> </a>
+      </div>
+      {% elif loop.index == 125  %}
+      <div class="col-xs-3" style="  display: flex;align-items: center;justify-content: center;position:relative;top: 23px;
+      border-radius: 50%; width: 85px;height: 80px; background:  rgb(69, 71, 212); ">
+      <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+           <img src="{{product.image}}" class="img-responsive" style="height: 12vh;width: 100%; ">
+             <h5 style="position:absolute;top:70px;border-radius: 6px;width: 80px; left: 10px; color: rgb(247, 247, 2)">  <strong> {{product.name}} </strong> <br> </h5> 
+           <h6 style="position:absolute;top:100px;border-radius: 6px;width: 100px; color:rgb(233, 239, 245) ;left: 2px;">  From RS.{{product.price}}  </h6> </a>
+      </div>
+      {% elif loop.index == 126  %}
+      <div class="col-xs-3" style="  display: flex;align-items: center;justify-content: center;
+      border-radius: 50%; width: 85px;height: 80px; background:  rgb(69, 71, 212); ">
+      <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+           <img src="{{product.image}}" class="img-responsive" style="height: 17vh;width: 100%; ">
+            <h5 style="position:absolute;top:70px;border-radius: 6px;width: 80px; left: 10px;   color: rgb(247, 247, 2)">  <strong>  {{product.name}} </strong> <br>  </h5> 
+           <h6 style="position:absolute;top:100px;border-radius: 6px;width: 100px; color:rgb(233, 239, 245) ;left: 2px;">  From RS.{{product.price}}  </h6> </a>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+    <br>
+    <br>
+    <br><br>
+
+    </div>
+    <br>
+
+    <!--images4 with background color-->
+     
+    <div class="container " style="background-color: pink;" >
+      <div class="col-xs-12">
+        <h6><strong>Shop More From The Brand stores</strong></h6>
+      </div>
+      
+      <div class="row">
+        {% for product in products %}
+
+        {% if loop.index == 127   %}
+        <div class="col-xs-6"  style="display: flex;align-items: center;justify-content: center;">
+
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+            <img src="{{product.image}}"  class="img-responsive" alt="" style=" height: 30vh;width: 90%; border-radius: 2px;border:10px; border-style: solid; border-color: rgb(255,255,255);">
+              
+            <h5 style=" text-align: center;color: rgb(31, 30, 30);"> <strong>{{product.name}}</strong></h5>
+            <h4 style=" text-align: center;"><small>Sprot's Shoes </small><br>
+            <strong>{{product.specifications}}</strong></h4>
+            </a>
+    
+          </div>
+          {% elif loop.index == 128   %}
+          <div class="col-xs-6"  style="display: flex;align-items: center;justify-content: center;">
+
+            <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+              <img src="{{product.image}}"  class="img-responsive" alt="" style=" height: 30vh;width: 100%; border-radius: 2px;border:10px; border-style: solid; border-color: rgb(255,255,255);">
+                
+              <h5 style=" text-align: center;color: rgb(31, 30, 30);"> <strong>{{product.name}}</strong></h5>
+           <h4  style=" text-align: center;"><small>Shoes,T-shirts & More</small><br>
+            <strong> {{product.specifications}}</strong></h4>
+          </a>
+        </div>
+      </div>
+      <br>
+
+        <div class="row">
+          {% elif loop.index == 129  %}
+          <div class="col-xs-6"  style="display: flex;align-items: center;justify-content: center;">
+
+            <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+              <img src="{{product.image}}"  class="img-responsive" alt="" style=" height: 30vh;width: 100%; border-radius: 2px;border:10px; border-style: solid; border-color: rgb(255,255,255);">
+                
+              <h5 style=" text-align: center;color: rgb(31, 30, 30);"> <strong>{{product.name}}</strong></h5>
+             <h5  style=" text-align: center;"><small>Cycle,Football,etc..</small><br>
+             <!--<strong> {{product.specifications}}</strong>--></h5>
+             </a>
+     
+           </div>
+           {% elif loop.index == 130   %}
+           <div class="col-xs-6"  style="display: flex;align-items: center;justify-content: center;">
+
+            <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+              <img src="{{product.image}}"  class="img-responsive" alt="" style=" height: 30vh;width: 100%; border-radius: 2px;border:10px; border-style: solid; border-color: rgb(255,255,255);">
+                
+              <h5 style=" text-align: center;color: rgb(31, 30, 30);"> <strong>{{product.name}}</strong></h5>
+            <h5  style=" text-align: center;"><small> Home Gym,Yoga Ma..</small><br>
+             <!--<strong>  {{product.specifications}}</strong>--></h5>
+           </a>
+         </div>
+         {% endif %}
+      {% endfor %}
+        </div>
+    </div>
+    <br>
+
+     
+     
+    <!--2 images in row with topic-->
+    <div class="container">
+      <div class="col-xs-12">
+        <h5><strong>PUT ON YOUR PLAYLIST & GET STARTED!</strong></h5>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+       
+          <a href="/filter_products/Workout" style="text-decoration: none;"> 
+          <img src="https://ik.imagekit.io/pve74zqrg/spor/pexels-victor-freitas-841130.jpg?updatedAt=1711695723030" class="img-responsive big" alt="" style="  height: 45vh;width: 100%;">           
+          <img src="https://ik.imagekit.io/pve74zqrg/spor/pexels-victor-freitas-841130.jpg?updatedAt=1711695723030" class="img-responsive small" alt="" style="  height: 35vh;width: 100%;">           
+          <h6 style="color: rgb(8, 8, 8);" >
+            <strong>SPORT WORKOUTS</strong>
+          </h6>
+          <h6 style="display: flex;justify-content: space-between;color: rgb(8, 8, 8);">Get Sporty, <br>
+          Get Active <span style="background-color: rgb(8, 8, 8);color: rgb(255, 255, 255);display: flex;align-items: center;justify-content: center;
+          border-radius: 50%;width: 19px;height: 20px;" class="glyphicon glyphicon-chevron-right" ></span></h6></a>
+
+        </div>
+        <div class="col-xs-6">
+          <a href="/filter_products/Swim" style="text-decoration: none;"> 
+          <img src="https://ik.imagekit.io/pve74zqrg/spor/swimming.jpg?updatedAt=1710655094052" class="img-responsive big" alt="" style="  height: 45vh;width: 100%;">
+          <img src="https://ik.imagekit.io/pve74zqrg/spor/swimming.jpg?updatedAt=1710655094052" class="img-responsive small" alt="" style="  height: 35vh;width: 100%;">
+          <h6 style="color: rgb(8, 8, 8);" >
+            <strong>SWIMMING</strong>
+          </h6>
+        </h6>
+        <h6 style="display: flex;justify-content: space-between;color: rgb(8, 8, 8);">Swim Away from <br> Worries 
+          <span style="background-color: rgb(8, 8, 8);color: rgb(255, 255, 255);display: flex;align-items: center;justify-content: center;
+        border-radius: 50%;  width: 19px;height: 22px;" class="glyphicon glyphicon-chevron-right" ></span></h6>
+        </a>
+        </div>
+      </div>
+    </div>
+     <br>
+
+      <!-- 1 images--> 
+      <div class="container big" >
+        <div class="row" style="height:37vh;width: 100%;background-color: rgb(80, 255, 80);">
+           
+          <div class="col-xs-12">
+            {% for product in products %}
+
+            {% if loop.index == 131  %}
+            <img src="{{product.image}}" class="img-responsive" alt="" style="  height: 41vh;width: 27%;position: absolute;top: 5px;left: 0px;">
+            {% elif loop.index == 132  %}
+            <img src="{{product.image}}" class="img-responsive" alt="" style="  height: 39vh;width: 27%;position: absolute;top: 25px;right: 35px;">
+            {% endif %}
+            {% endfor %}
+            
+            <a href="/filter_products/shoe" style="text-decoration: none;"> 
+            <h5 style="color:rgb(3, 3, 3);position: absolute;left: 330px;top: 20px;" ><strong>Shoes Guide</strong></h5>
+            <h4 style="color:white;position: absolute;left: 300px;top: 42px;"><strong>ULTIMATE GUIDE <br>TO ALL SPORTS</strong></h4>
+            <h6 style="display: flex;justify-content: space-between; color:rgb(8, 8, 8);
+             position: absolute;left: 310px;top: 98px;"> Explore Now </h6><span style="position: absolute;left: 376px;top: 101px;background-color: rgb(255, 255, 255) ;color:   rgb(8, 8, 8);display: flex;align-items: center;justify-content: center;
+              border-radius: 50%;width: 28px;height: 26px;margin: 0px 10px;" class="glyphicon glyphicon-chevron-right" ></span>
+              </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container small" style="height:33vh;width: 100%;background-color: rgb(80, 255, 80);">
+        <div class="row"  >
+           
+          <div class="col-xs-12">
+            {% for product in products %}
+
+            {% if loop.index == 131  %}
+            <img src="{{product.image}}" class="img-responsive" alt="" style="  height: 29vh;width: 37%;position: absolute;top: 5px;left: 0px;">
+            {% elif loop.index == 132  %}
+            <img src="{{product.image}}" class="img-responsive" alt="" style="  height: 19vh;width: 27%;position: absolute;top: 85px;right: 35px;">
+            {% endif %}
+            {% endfor %}
+            
+            <a href="/filter_products/shoe" style="text-decoration: none;"> 
+            <h5 style="color:rgb(3, 3, 3);position: absolute;left: 160px;top: 20px;" ><strong>Shoes Guide</strong></h5>
+            <h4 style="color:white;position: absolute;left: 130px;top: 42px;"><strong>ULTIMATE GUIDE <br>TO ALL SPORTS</strong></h4>
+            <h6 style="display: flex;justify-content: space-between; color:rgb(8, 8, 8);
+             position: absolute;left: 160px;top: 98px;"> Explore Now </h6><span style="position: absolute;left: 222px;top: 101px;background-color: rgb(255, 255, 255) ;color:   rgb(8, 8, 8);display: flex;align-items: center;justify-content: center;
+              border-radius: 50%;width: 28px;height: 26px;margin: 0px 10px;" class="glyphicon glyphicon-chevron-right" ></span>
+              </a>
+          </div>
+        </div>
+      </div>
+     
+      <br>
+     <!-- 1 png image with content-->
+    <div class="container"   >
+      <div class="row"> 
+        <div class=" col-xs-12" style="background-color:  rgb(255, 8, 8);color:rgb(255, 255, 255);">
+         <h5>
+            <strong> CONFUSED WHAT TO BUY?</strong>
+          </h5>
+          <h6>Here's A Complete Guide</h6>
+        </div>
+      </div>
+
+      <div class="row" style="display: flex;align-items: center;justify-content: space-between;"> 
+        <div class="col-xs-6"> 
+          {% for product in products %}
+
+          {% if loop.index == 133  %}
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+          <img src="{{product.image}}" class="img-responsive" alt="" style="width: 85%;height: 33vh; "></a>
+        </div>
+        <div class="col-xs-6"> 
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+          <h5 style="color:red;position: absolute;left: 10px;bottom: 7px;"><strong>CYCLE & ACCESORIES</strong></h5>
+          <h6 style="position: absolute;left: 10px;top: 1px;color: rgb(0, 0, 0);"> Hybrid Bikes Are the <br>
+          Best To Ride On The <br>
+          Indian Terrian</h6>
+
+           
+            <h5 style="position:absolute;top: 50px;left: 8px; color: rgb(8, 8, 8);display: flex;   "><strong>KNOW MORE</strong> 
+            <span style="background-color: rgb(8, 8, 8)   ;color: rgb(255, 255, 255) ;display: flex;align-items: center;justify-content: center;
+            border-radius: 50%;width: 18px;height: 18px ;margin: 0px 10px; " class="glyphicon glyphicon-chevron-right" ></h5></span></a>
+        </div>    
+        {% endif %}
+        {% endfor %}   
+      </div>
+    </div>
+     <br>
+      
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+  var swiper = new Swiper('.swiper-container', {
+  loop: true,
+  autoplay:{delay:2500,disableOnInteraction:false}, // Enable loop mode
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+});
+ </script>
+ <script>
+  
+  function handleSearchRedirect() {
+      var screenWidth = window.innerWidth;
+      var searchLink = document.getElementById('searchLink');
+      if (screenWidth < 768) { // For small screens
+          searchForm.removeAttribute('action');
+          searchLink.setAttribute('href', "{{ url_for('searchbar') }}");
+      } else { // For larger screens
+          searchLink.removeAttribute('href');
+      }
+  }
+
+  // Run the function on page load and window resize
+  document.addEventListener('DOMContentLoaded', handleSearchRedirect);
+  window.addEventListener('resize', handleSearchRedirect);
+
+
+</script>
+
+<script>
+// Function to handle form submission
+function validateSearchForm(event) {
+    var searchInput = document.getElementById('searchInput');
+    
+    // Check if the input field is empty
+    if (searchInput.value.trim() === '') {
+        event.preventDefault(); // Prevent form submission if input is empty
+    }
+}
+
+// Add event listener to the form for form submission validation
+document.getElementById('searchForm').addEventListener('submit', validateSearchForm);
+</script>
+
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.min.js.js"></script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI/t1u1d764l38aYGRe6l8w2Y4CmkXpS6EEN5/sA=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>Profile</title>
+</head>
+<body>
+     
+{% if current_user.is_authenticated %}
+     
+<div class="container">
+    <div class="row">
+        <h2 style="color: black;">Welcome, {{ current_user.username }}!</h2>
+        <h3 style="color: black;">Your Purchase History</h3>
+    </div>
+</div>
+     
+            {% for purchase in purchase_history %}
+                 <div class="container" style="height=300px;width:auto; padding:20px;margin:10px;display:flex;align-items:centre;">
+                     
+                   <div class="row">
+                      <div class="col-xs-4">
+                        <img src="{{ purchase.product_image }}" class="img-responsive" alt="{{ purchase.product_name }}" style="height: 37vh; width: 90%; ">
+					   
+					  </div>
+                      <div class="col-xs-4">
+					   <h2 style="color: black;">{{ purchase.product_name }} </h2>  
+                       <h4 style="color: black;">Quantity: {{ purchase.quantity }}</h4> 
+                       <h4 style="color: black;">Price: RS.{{ purchase.product_price }}</h4>   
+                       <h4 style="color: black;">Total Price: RS.{{ purchase.total_price }} </h4> 
+                      </div>
+                      <div class="col-xs-4">
+					  <h4 style="color: black;">Purchased On: {{ purchase.purchase_date }}</h4> 
+					  </div>
+ 
+                    </div>
+                </div>
+            {% endfor %}
+         
+{% else %}
+    <p>Please log in to view your dashboard.</p>
+{% endif %}
+
+
+</body>
+</html>-->
+
+  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI/t1u1d764l38aYGRe6l8w2Y4CmkXpS6EEN5/sA=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>Profile</title>
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+
+        .big
+             {
+                display: block;
+             }
+             .small
+             {
+                display: none;
+             }
+        /* Adjustments for smaller screens */
+        @media only screen and (max-width: 768px) {
+            .container {
+                padding: 0;
+            }
+
+            .col-xs-6 {
+                width: 100%;
+            }
+
+             .big
+             {
+                display: none;
+             }
+             .small
+             {
+                display: block;
+             }
+        }
+    </style>
+</head>
+<body>
+{% if current_user.is_authenticated %}
+<div class="container">
+    <div class="row">
+        <h2 style="color: black;text-align: center;">Welcome, {{ current_user.username }}!</h2>
+        <h3 style="color: black;text-align: center;">Your Purchase History</h3>
+    </div>
+</div>
+<div class="container" style=" margin: 10px;">
+    {% for purchase in purchase_history %}
+    <div class="row" style="padding: 20px;">
+        <div class="col-xs-6">
+            <img src="{{ purchase.product_image }}" class="img-responsive big" style="width: 40%;height: 40vh;" alt="{{ purchase.product_name }}">
+            <img src="{{ purchase.product_image }}" class="img-responsive small" style="width: 50%;height: 26vh;" alt="{{ purchase.product_name }}">
+        </div>
+        <div class="col-xs-6">
+            <h2 style="color: black;">{{ purchase.product_name }} </h2>             
+            <h4 style="color: black;"> <strong>Price:</strong> RS.{{ purchase.product_price }}</h4>
+            <h4 style="color: black;"> <strong>Quantity:</strong> {{ purchase.quantity }}</h4>
+            <h4 style="color: black;"> <strong>Total Price:</strong> RS.{{ purchase.total_price }}</h4>
+            <h4 style="color: black;"><strong>Purchased On:</strong>  {{ purchase.purchase_date }}</h4>
+        </div>
+    </div>
+     
+    {% endfor %}
+</div>
+{% else %}
+<p>Please log in to view your dashboard.</p>
+{% endif %}
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.min.js.js"></script>
+</body>
+</html>
+

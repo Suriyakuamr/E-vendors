@@ -1,0 +1,38 @@
+.sear,.title
+{
+  display: none;
+}
+@media only screen and (max-width: 768px) {
+  .ima {
+      height: 10vh; /* Adjust the height for small screens */
+      width: 100%; /* Adjust the width for small screens */
+  }
+  .slide1
+  {
+    margin-top: 260px;
+  }
+  
+  .mySwiper,.title
+{
+  display:  block;
+}
+.big,.b-title
+{
+  display: none;
+}
+.sear 
+{
+   
+  display:  block;
+}
+.form-control,.se-ic{
+  border-radius: 30px;
+  
+}
+.form-control
+{
+  width: 30%;
+}
+  
+
+}

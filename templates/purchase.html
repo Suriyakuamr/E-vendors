@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase History</title>
+    <!-- Add any additional styles or scripts here -->
+</head>
+<body>
+    <h1>Purchase History</h1>
+
+    {% if purchase_history %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                    <!-- Add more columns as needed -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for purchase in purchase_history %}
+                    <tr>
+                        <td>{{ purchase.product.name }}</td>
+                        <td>{{ purchase.quantity }}</td>
+                        <td>{{ purchase.total_price }}</td>
+                        <!-- Add more columns as needed -->
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No purchase history available.</p>
+    {% endif %}
+
+    <!-- Add any additional content or scripts here -->
+</body>
+</html>

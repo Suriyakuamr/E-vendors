@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-vendors/Electronics</title>
+    <script src="https://unpkg.com/swiper@6.8.4/swiper-bundle.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/swiper@6.8.4/swiper-bundle.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/mobiles.css">
+    <style>
+      .big
+      {
+        display: block;
+      }      
+      .small
+      {
+        display: none;
+      }  
+      body
+      {
+        overflow-x: hidden;
+      }
+      @media only screen and (max-width: 768px) {
+        .big
+      {
+        display: none;
+      }      
+      .small
+      {
+        display: block;
+      }  
+      body
+      {
+        overflow-x: hidden;
+      }
+    }
+    </style>
+  </head>
+  
+  <body>
+     <!--nav-->
+    <nav class="navbar   navbar-default   navbar-fixed-top" id="topnav" style=" background:white">
+      <div class="container-fluid" style="margin-top: 10px;display: flex;align-items: center;justify-content: center;">
+         <div class="row">
+  
+        <!--title-->
+        <div class="col-xs-3 title">
+           <h4 style="color: black; font-family: Sacramento, cursive;margin-top: 15px;"> Electronics </h4> 
+        </div>
+  
+        <div class="col-xs-2 b-title">
+           <h3 style="color: black; font-family: Sacramento, cursive;margin-top: 15px;margin-right: 120px;">   Electronics  </h3>
+       </div>
+  
+         
+       <!--search bar FOR BIG SCREEN-->
+  <div class="col-xs-4  big">
+  <a id="searchLink" href="{{ url_for('searchbar') }}" style="text-decoration: none;">
+      <form class="navbar-form navbar-left search" action="{{ url_for('search') }}" id="searchForm" method="GET" >
+          <div class="input-group  big">
+            <input id="searchInput" type="text" class="form-control" placeholder="Search For products,Brands and More" name="search">
+               <div class="input-group-btn">
+                  <button id="searchButton" class="btn btn-default" type="submit">
+                      <i class="glyphicon glyphicon-search"></i>
+                  </button>
+              </div>
+          </div>
+      </form>
+  </a>
+  </div>
+  
+  
+  <!--CART-->
+       <div class="col-xs-3">        
+          <a href="{{ url_for('cart') }}" style="display: flex; align-items: center; justify-content: space-around;" class="navbar-brand cart" id="my">
+            <span id="cart-icon" class="glyphicon glyphicon-shopping-cart"  style="color: black;margin-bottom: 8px;"></span>
+            <h4 id="cart-text" style="color: black;margin-left: 5px;   ">Cart</h4>
+        </a>
+       </div>
+  
+        <!--accout-->
+        
+    <div class="col-xs-3"   >
+    
+     {% if current_user.is_authenticated %}
+     
+   
+   <div class="dropdown">
+    
+    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+    style="background-color:rgb(255, 255, 255); color:rgb(0, 0, 0);margin-left: 2px;">
+  <h5>
+    <span class="glyphicon glyphicon-user" style="display: inline-block; color:black;">Account</span>
+    <span class="caret"></span>
+  </h5>  
+  </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <ul class="list-unstyled" style="text-align: center;">
+        <li>
+           <a href="{{ url_for('profile', user_id=current_user.id) }}">
+      <h5 style="display: block;color: black;">  <span class="glyphicon glyphicon-user" style="display: inline-block;color:black;"> My Profile</h5></span></a></li>
+        <li><a class="dropdown-item" href="{{ url_for('logout') }}"><h5 style="color: black;"> Logout <span class="glyphicon glyphicon-log-out"></span> </h5> </a></li>
+        <li><a class="dropdown-item" href="{{ url_for('dashboard') }}"><h5 style="color: black;"> Orders</h5></a></li>
+      </ul>
+    </div>
+  </div>
+  
+  
+  {% else %}
+   
+  <a  href="{{ url_for('login') }}" style="display: flex; align-items: center; justify-content: space-around;" class="navbar-brand cart" id="my">
+  <span style="display: inline-block; color:black;margin-bottom: 8px;"  class="glyphicon glyphicon-log-in"></span>
+  <h5 id="cart-text" style="color: black;margin-left: 5px;   ">LOGIN</h5>
+  </a>
+    
+  {% endif %}
+  </div>
+   
+       
+  
+        
+  <!--2 nd for search bar small screen-->
+         
+  <div class="col-xs-3 sear">
+    <a id="searchLink" href="{{ url_for('searchbar') }}" style="text-decoration: none;">
+       
+              <div class="input-group-btn">
+                <button id="searchButton" class="btn btn-default " type="submit" style=" font-size: 20px;border: none;margin-top: 10px;">
+                     
+                  <span class="glyphicon glyphicon-search"></span>
+              </button>
+              </div>
+           
+  </a>
+   </div>
+         
+  
+      </div>    
+     
+      </div>
+  </nav>
+
+  <div class="container"  style="margin-top: 100px;">
+    <div class="row" style="display:flex;align-items: center;justify-content: space-between;">
+       
+      <a href="/filter_products/apple" style="text-decoration: none;"> 
+      <div class="col-xs-2" style="  display: flex;align-items: center;justify-content: center;border-color: rgb(218, 211, 211); border-style:solid;
+      border-width: 0.02px;border-radius: 50%;width: 60px;height: 60px;  background:  rgb(255, 255, 255); ">
+    <h6 style="color:rgb(2, 2, 2)">   <strong> APPLE</strong></h6>
+    </div></a>
+
+    <a href="/filter_products/Asus" style="text-decoration: none;"> 
+    <div class="col-xs-2" style="  display: flex;align-items: center;justify-content: center;border-color: rgb(218, 211, 211); border-style:solid;
+      border-width: 0.02px;border-radius: 50%;width: 60px;height: 60px;  background:  rgb(255, 255, 255); ">
+    <h5 style="color:rgb(1, 37, 155);font-family: cursive;"> <strong>Asus</strong></h5>
+    </div></a>
+
+    <a href="/filter_products/Samsung" style="text-decoration: none;">  
+    <div class="col-xs-2" style="  display: flex;align-items: center;justify-content: center;border-color: rgb(218, 211, 211); border-style:solid;
+      border-width: 0.02px;border-radius: 50%;width: 63px;height: 64px;  background:  rgb(255, 255, 255); ">
+     <h6 style="color:rgb(15, 38, 112); "> <strong>SAMSUNG</strong></h6>
+    </div></a>
+
+
+    <a href="/filter_products/Lenovo" style="text-decoration: none;"> 
+      <div class="col-xs-2" style="  display: flex;align-items: center;justify-content: center;border-color: rgb(218, 211, 211); border-style:solid;
+        border-width: 0.02px;border-radius: 50%;width: 63px;height: 64px;  background:  rgb(255, 255, 255); ">
+       <h6 style="color:rgb(248, 11, 11); "> <strong>Lenovo</strong></h6>
+      </div></a>
+
+     
+    </div>
+    <br>
+   
+    <div class="row" style="display:flex;align-items: center;justify-content: space-between;"> 
+      
+      <a href="/filter_products/Boat" style="text-decoration: none;"> 
+        <div class="col-xs-2" style="display: flex;align-items: center;justify-content: center;border-color: rgb(218, 211, 211); border-style:solid;
+            border-width: 0.02px;border-radius: 50%;width: 60px;height: 60px;  background:  rgb(255, 255, 255); ">
+            <h5 style="color:rgb(70, 66, 66); "><strong>Boat</strong></h5>
+        </div></a>
+    
+
+        <a href="/filter_products/Mi" style="text-decoration: none;"> 
+        <div class="col-xs-2" style="  display: flex;align-items: center;justify-content: center;border-color: rgb(218, 211, 211); border-style:solid;
+          border-width: 0.02px;border-radius: 50%;width: 60px;height: 60px;  background:  rgb(255, 255, 255); ">
+         <h5 style="color:rgb(81, 16, 141); "> <strong> Mi</strong></h5>
+        </div></a>
+
+        <a href="/filter_products/realme" style="text-decoration: none;"> 
+          <div class="col-xs-2" style="  display: flex;align-items: center;justify-content: center;border-color: rgb(218, 211, 211); border-style:solid;
+            border-width: 0.02px;border-radius: 50%;width: 60px;height: 60px;  background:  rgb(255, 255, 255); ">
+           <h5 style="color:rgb(24, 24, 24);background-color: rgb(255, 255, 49);"> <strong>realme</strong></h5>
+          </div></a>
+
+          <a href="/filter_products/Dell" style="text-decoration: none;"> 
+            <div class="col-xs-2" style="  display: flex;align-items: center;justify-content: center;border-color: rgb(218, 211, 211); border-style:solid;
+              border-width: 0.02px;border-radius: 50%;width: 63px;height: 64px;  background:  rgb(255, 255, 255); ">
+             <h6 style="color:rgb(14, 60, 212); "> <strong> DELL</strong></h6>
+            </div></a>
+    </div>
+  </div>
+  <br>
+  
+
+ <!--slide 1-->
+ <div class="container"  >
+    
+  <div class="row">
+      <div class="swiper-container">
+          <div class="swiper-wrapper">
+              <!-- Slide 1 -->
+              {% for product in products %}
+
+          {% if loop.index == 89  %}
+             <div class="swiper-slide" style="display: flex; align-items: center; justify-content: center;
+                height:  47vh;width: 100%; background: linear-gradient(to right, rgb(219, 223, 223), rgb(240, 241, 241))">
+                <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+              <img src="{{product.image}}" alt="Los Angeles" class="  img-responsive" style="height:30vh;width: 100%;"></a>
+              <div  >
+                <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+                <h5 style="text-align: center;color: black;"> <strong>{{product.name}}</strong></h5>
+                <h5 style=" text-align: center;color: black">50-hour playtime <br>
+                Quad mic with ENC</h5>
+                <h6 style=" text-align: center;color: black">Buds vs404</h6>
+                <button  type="button" class="btn btn-responsive" style="  text-align: center;background-color: rgb(89, 78, 255);
+            width: 76px;height: 22px;display:flex;justify-content:center;  align-items: center;border-radius:20px"  ><h6 style="color: rgb(245, 245, 255);">
+             RS.{{product.price}} </h6> </button></a>
+              </div>
+               
+            </div>
+            
+
+
+           
+
+            {% elif loop.index == 71  %}
+            <div class="swiper-slide" style="display: flex; align-items: center; justify-content: center;
+                 height:  47vh;background: linear-gradient(to right, rgb(219, 223, 223), rgb(240, 241, 241))">
+         <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+         <img src="{{product.image}}" alt="New York" class="  img-responsive" style="height:58vh;width: 100%;"  ></a>
+
+         <div class="carousel-caption">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+           <h6 style="text-align: center;color: black;">  <strong>Appl* Macbook</strong></h6>
+             <h5 style=" text-align: center;color: black;"> <strong> Up to Extra RS.10,000 Off</strong></h5>
+             <h6 style=" text-align: center;color: black;"> Sign Up for Student's Club </h6></a>
+         </div>
+       </div>
+
+
+       <!--slide 4-->
+       {% elif loop.index == 114  %}
+            <div class="swiper-slide" style="display: flex; align-items: center; justify-content: center;
+                height:  47vh;background: linear-gradient(to right, rgb(182, 181, 181), rgb(253, 253, 253))">
+                <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+        <img src="{{product.image}}" alt="New York" class="  img-responsive" style="height:30vh;width: 100%; " ></a>
+        <div class="carousel-caption">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+          <h4 style=" text-align: center; color:white; "><strong>A display <br> of Love</strong></h4>
+            <h6 style=" text-align: center;color: white;"> From RS.{{product.price}} </h6>
+            <button  type="button" class="btn btn-responsive" style="  text-align: center; 
+      width: 76px;height: 22px;display:flex;justify-content:center;  align-items: center;border-radius:20px"  ><h6 style="color: rgb(8, 8, 8);">
+       Shop Now </h6> </button></a>
+        </div>
+        </div>
+         
+
+        {% elif loop.index == 87  %}
+        <div class="swiper-slide" style="display: flex; align-items: center; justify-content: center;
+        height:  47vh; background: linear-gradient(to right, rgb(197, 204, 204), rgb(255, 255, 255))">
+        <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+          <img src="{{product.image}}" alt="New York" class="  img-responsive"   style="height:36vh;width: 100%; " ></a>
+          <div class="carousel-caption">
+            <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+            <h5 style=" text-align: center;color: black;  "><strong> {{product.name}}</strong></h5>
+               <h5 style="text-align: center;color: black;"> Sale is Live </h5>
+               <button  type="button" class="btn btn-responsive" style="  text-align: center;background-color: rgb(8, 8, 8);
+         width: 86px;height: 22px;display:flex;justify-content:center;  align-items: center;border-radius:10px"  ><h6 style="color: rgb(255, 255, 255);">
+          Just RS.{{product.price}} </h6> </button></a>
+          
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+
+
+             </div>
+          </div>
+      </div>
+  </div>
+</div>
+<br>
+
+<!--IMMAGE1-->
+    <div class="container- " style="background-color: rgb(121, 8, 121);width: 100%;">
+      <div class="row" style="display: flex;align-items: center;justify-content:space-between;margin-left: 1px;">
+        <div class="col-xs-8" style="color:white">
+           <h5 style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"> <strong>Student's Carnival on Laptops</strong> <br>
+             <strong> March 14th-18th</strong> <br>
+            Special offers,NCEMI,Exch.off & more</h5>
+
+        </div>
+
+        <div class="col-xs-4" style="margin-right: 5px;">
+           <img src="https://ik.imagekit.io/pve74zqrg/acces/macbook.png?updatedAt=1710520836461"  class="img-responsive" alt="" style="height: 19vh;width: 80%; ">
+    
+          </div>
+           
+      </div>
+    </div>
+    <br>
+
+    <!--16 images-->
+    <div class="container">
+       
+      <div class="row" style="display: flex;align-items: center;justify-content: center;margin-right: 6px;">
+        {% for product in products %}
+
+    {% if loop.index == 72   %}
+    <div class="col-xs-3"  style="display: flex;align-items: center;justify-content: center;">
+      <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">            
+        <img src="{{product.image}}" class="img-responsive" style="height:12vh;width:100%" alt="">           
+      <h6 style="color: black;text-align: center;">  {{product.name}} </h6></a>    
+    </div>
+
+        {% elif loop.index == 73   %}
+        <div class="col-xs-3"  style="display: flex;align-items: center;justify-content: center;">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">            
+            <img src="{{product.image}}" class="img-responsive" style="height:12vh;width:100%" alt="">           
+          <h6 style="color: black;text-align: center;">  {{product.name}} </h6></a>    
+        </div>
+        {% elif loop.index == 74  %}
+        <div class="col-xs-3"  style="display: flex;align-items: center;justify-content: center;">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">            
+            <img src="{{product.image}}" class="img-responsive" style="height:12vh;width:100%" alt="">           
+          <h6 style="color: black;text-align: center;">  {{product.name}} </h6></a>    
+        </div>
+
+        {% elif loop.index == 75   %}
+        <div class="col-xs-3"  style="display: flex;align-items: center;justify-content: center;">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">            
+            <img src="{{product.image}}" class="img-responsive" style="height:12vh;width:100%" alt="">           
+          <h6 style="color: black;text-align: center;">  {{product.name}} </h6></a>    
+        </div>
+         
+      </div>
+      <br>
+      <br>
+      <!--row 2-->
+      <div class="row" style="display: flex;align-items: center;justify-content: center;margin-right: 6px;">
+        {% elif loop.index == 76   %}
+        <div class="col-xs-3"  style="display: flex;align-items: center;justify-content: center;">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">            
+            <img src="{{product.image}}" class="img-responsive" style="height:12vh;width:100%" alt="">           
+          <h6 style="color: black;text-align: center;">  {{product.name}} </h6></a>    
+        </div>
+
+        {% elif loop.index == 77  %}
+        <div class="col-xs-3"  style="display: flex;align-items: center;justify-content: center;">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">            
+            <img src="{{product.image}}" class="img-responsive" style="height:12vh;width:100%" alt="">           
+          <h6 style="color: black;text-align: center;">  {{product.name}} </h6></a>    
+        </div>
+
+        {% elif loop.index == 78   %}
+        <div class="col-xs-3"  style="display: flex;align-items: center;justify-content: center;">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">            
+            <img src="{{product.image}}" class="img-responsive" style="height:12vh;width:100%" alt="">           
+          <h6 style="color: black;text-align: center;">  {{product.name}} </h6></a>    
+        </div>
+
+        {% elif loop.index == 79  %}
+        <div class="col-xs-3"  style="display: flex;align-items: center;justify-content: center;">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">            
+            <img src="{{product.image}}" class="img-responsive" style="height:12vh;width:100%" alt="">           
+          <h6 style="color: black;text-align: center;">  {{product.name}} </h6></a>    
+        </div>
+        
+      </div>
+      <br>
+      <br>
+      <br>
+
+      <!--row 3-->
+      <div class="row" style="display: flex;align-items: center;justify-content: center;margin-right: 6px;">
+        {% elif loop.index == 80  %}
+        <div class="col-xs-3"  style="display: flex;align-items: center;justify-content: center;">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">            
+            <img src="{{product.image}}" class="img-responsive" style="height:12vh;width:100%" alt="">           
+          <h6 style="color: black;text-align: center;">  {{product.name}} </h6></a>    
+        </div>
+
+        {% elif loop.index == 81  %}
+        <div class="col-xs-3"  style="display: flex;align-items: center;justify-content: center;">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">            
+            <img src="{{product.image}}" class="img-responsive" style="height:12vh;width:100%" alt="">           
+          <h6 style="color: black;text-align: center;">  {{product.name}} </h6></a>    
+        </div>
+        {% elif loop.index == 82  %}
+        <div class="col-xs-3"  style="display: flex;align-items: center;justify-content: center;">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">            
+            <img src="{{product.image}}" class="img-responsive" style="height:12vh;width:100%" alt="">           
+          <h6 style="color: black;text-align: center;">  {{product.name}} </h6></a>    
+        </div>
+
+        {% elif loop.index == 83  %}
+        <div class="col-xs-3"  style="display: flex;align-items: center;justify-content: center;">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">            
+            <img src="{{product.image}}" class="img-responsive" style="height:12vh;width:100%" alt="">           
+          <h6 style="color: black;text-align: center;">  {{product.name}} </h6></a>    
+        </div>
+
+      </div>
+      <br>
+      <br>
+      <br>
+
+      <!--row 4-->
+      <div class="row" style="display: flex;align-items: center;justify-content: center;margin-right: 6px;">
+        {% elif loop.index == 84  %}
+        <div class="col-xs-3"  style="display: flex;align-items: center;justify-content: center;">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">            
+            <img src="{{product.image}}" class="img-responsive" style="height:12vh;width:100%" alt="">           
+          <h6 style="color: black;text-align: center;">  {{product.name}} </h6></a>    
+        </div>
+        
+        {% elif loop.index == 85  %}
+        <div class="col-xs-3"  style="display: flex;align-items: center;justify-content: center;">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">            
+            <img src="{{product.image}}" class="img-responsive" style="height:12vh;width:100%" alt="">           
+          <h6 style="color: black;text-align: center;">  {{product.name}} </h6></a>    
+        </div>
+
+        {% elif loop.index == 86  %}
+        <div class="col-xs-3"  style="display: flex;align-items: center;justify-content: center;">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">            
+            <img src="{{product.image}}" class="img-responsive" style="height:12vh;width:100%" alt="">           
+          <h6 style="color: black;text-align: center;">  {{product.name}} </h6></a>    
+        </div>
+
+        {% elif loop.index == 87  %}
+        <div class="col-xs-3"  style="display: flex;align-items: center;justify-content: center;">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">            
+            <img src="{{product.image}}" class="img-responsive" style="height:12vh;width:100%" alt="">           
+          <h6 style="color: black;text-align: center;">  {{product.name}} </h6></a>    
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </a>
+    <br>
+    <br>
+
+    </div>
+    <br>
+
+    <!-- 2 png images-->
+    <div class="container">
+      <h5 style="font-family:cursive"><strong>Techy Deals Arriving</strong></h5>
+      <h6 style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Gadget Freaks,Ready to Explore?</h6>
+      <div class="row" style="display: flex;justify-content: space-between;">
+        {% for product in products %}
+
+        {% if loop.index == 88   %}
+        <div class="col-xs-6" style="display: flex;align-items: center;justify-content: center;">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+          <div class="box" style=" border-radius:3px;width: 100%;height: 100px; display: flex;
+          align-items: center;justify-content: center;">
+           
+           <img src="{{product.image}}" style="width:100%;height: 16vh;" class="img-responsive" alt="">
+          </div>
+           
+          <h6 style="color:rgb(12, 12, 12);text-align: center;">{{product.name}}</h6>
+          <h5 style="color:rgb(12, 12, 12);text-align: center;"><strong>From RS.{{product.price}}</strong></h5></a>
+    
+        </div>
+
+        {% elif loop.index == 89   %}
+        <div class="col-xs-6" style="display: flex;align-items: center;justify-content: center;">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+          <div class="box" style="background:    rgb(250, 235, 170);border-radius:7px;width: 140px;height: 100px; display: flex;
+          align-items: center;justify-content: center;">
+           
+           <img src="{{product.image}}" style="width:90%;height: 20vh;" class="img-responsive" alt="">
+          </div>
+           
+          <h6 style="color:rgb(12, 12, 12);text-align: center;">{{product.name}}</h6>
+          <h5 style="color:rgb(12, 12, 12);text-align: center;"><strong>From RS.{{product.price}}</strong></h5></a>
+    
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    <br>
+
+    <!--slide2-->    
+
+<div class="container" style="background-color: rgb(255, 239, 20);height: 90vh;width: 100%;">
+  <div class="row">
+      <div class="col-md-7" style="color:rgb(24, 23, 23);">
+          <h4 style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;"><strong>Newest Releases</strong></h4>
+          <h6 style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"> Set Back and Choose  From the Latest Launches</h6>
+      </div>
+      
+  </div>
+
+  <div class="row">
+      <div class="swiper-container">
+          <div class="swiper-wrapper">
+              <!-- Slide 1 -->
+             <div class="swiper-slide" style="display: flex; align-items: center; justify-content: center;">
+              <div class="box" style="background-color: rgb(255, 249, 142); border-radius: 5px; padding: 20px; width: 90%;height: 70vh; display: flex; align-items: center; justify-content:  space-between; flex-wrap: wrap;">
+              
+                <div class="2con" style="height: 45vh;width: 40%; ">
+                  {% for product in products %}
+                  {% if loop.index == 91   %}
+                  <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+                  <img src="{{product.image}}" class="img-responsive big" style="width: 90%; height: 25vh; border-radius: 4px;  " alt="">
+                  <img src="{{product.image}}" class="img-responsive small" style="width: 100%; height: 16vh; border-radius: 4px;  " alt="">
+                  <h6 style="color: black;text-align: center;"> {{product.name}} </h6></a>
+                  {% elif loop.index == 92   %}
+                  <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+                  <img src="{{product.image}}" class="img-responsive big" style="width: 60%; height: 23vh; border-radius: 4px; " alt="">
+                  <img src="{{product.image}}" class="img-responsive small" style="width: 100%; height: 20vh; border-radius: 4px; " alt="">
+                   <h6 style="color: black;text-align: center;">  {{product.name}}</h6></a>
+                   {% endif %}
+                {% endfor%}
+                </div>
+                 
+                {% for product in products %}
+                {% if loop.index == 90   %}
+                <div class="1con" style="height: 45vh;width: 50%;border-radius: 7px;background-color:  white;display: flex;align-items: center;justify-content: center;">
+                  <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+                  <img src="{{product.image}}" alt="Trimme" class="img-responsive" style="width: 100%;height: 40vh; border-radius: 22px;"></a>
+                </div>
+                {% endif %}
+                {% endfor%}
+              </div>
+            </div>
+
+
+
+                <!-- Slide 2 -->
+             <div class="swiper-slide" style="display: flex; align-items: center; justify-content: center;">
+              <div class="box" style="background-color: rgb(255, 249, 142); border-radius: 5px; padding: 20px; width: 90%;height: 70vh; display: flex; align-items: center; justify-content:  space-between; flex-wrap: wrap;">
+              
+                <div class="2con" style="height: 45vh;width: 40%; ">
+                  {% for product in products %}
+                  {% if loop.index == 94   %}
+                  <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+                  <img src="{{product.image}}" class="img-responsive" style="width: 70%; height: 22vh; border-radius: 4px;  " alt="">
+                  <h6 style="color: black;text-align: center;"> {{product.name}} </h6></a>
+                  {% elif loop.index == 95   %}
+                  <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+                  <img src="{{product.image}}" class="img-responsive big" style="width: 50%; height: 26vh; border-radius: 4px; " alt="">
+                  <img src="{{product.image}}" class="img-responsive small" style="width: 100%; height: 20vh; border-radius: 4px; " alt="">
+                   <h6 style="color: black;text-align: center;">  {{product.name}}</h6></a>
+                   {% endif %}
+                {% endfor%}
+                </div>
+                 
+                {% for product in products %}
+                {% if loop.index == 93   %}
+                <div class="1con" style="height: 45vh;width: 50%;border-radius: 7px;background-color:  white;display: flex;align-items: center;justify-content: center;">
+                  <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+                  <img src="{{product.image}}" alt="Trimme" class="img-responsive" style="width: 100%;height: 40vh; border-radius: 22px;"></a>
+                </div>
+                {% endif %}
+                {% endfor%}
+              </div>
+            </div>
+
+
+                <!-- Slide 3 -->
+             <div class="swiper-slide" style="display: flex; align-items: center; justify-content: center;">
+              <div class="box" style="background-color: rgb(255, 249, 142); border-radius: 5px; padding: 20px; width: 90%;height: 70vh; display: flex; align-items: center; justify-content:  space-between; flex-wrap: wrap;">
+              
+                <div class="2con" style="height: 45vh;width: 40%; ">
+                  {% for product in products %}
+                  {% if loop.index == 97   %}
+                  <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+                  <img src="{{product.image}}" class="img-responsive big" style="width: 25%; height: 22vh; border-radius: 4px;  " alt="">
+                  <img src="{{product.image}}" class="img-responsive small" style="width: 65%; height: 22vh; border-radius: 4px;  " alt="">
+                  <h6 style="color: black;text-align: center;"> {{product.name}} </h6></a>
+                  {% elif loop.index == 98   %}
+                  <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+                  <img src="{{product.image}}" class="img-responsive big" style="width: 60%; height: 22vh; border-radius: 4px; " alt="">
+                  <img src="{{product.image}}" class="img-responsive small" style="width: 100%; height: 22vh; border-radius: 4px; " alt="">
+                   <h6 style="color: black;text-align: center;">  {{product.name}}</h6></a>
+                   {% endif %}
+                {% endfor%}
+                </div>
+                 
+                {% for product in products %}
+                {% if loop.index == 96   %}
+                <div class="1con" style="height: 45vh;width: 50%;border-radius: 7px;background-color:  white;display: flex;align-items: center;justify-content: center;">
+                  <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+                  <img src="{{product.image}}" alt="Trimme" class="img-responsive big" style="width: 100%;height: 40vh; border-radius: 22px;">
+                  <img src="{{product.image}}" alt="Trimme" class="img-responsive small" style="width: 100%;height: 30vh; border-radius: 22px;"></a></a>
+
+                </div>
+                {% endif %}
+                {% endfor%}
+              </div>
+            </div>
+
+             <!-- Slide 4 -->
+             <div class="swiper-slide" style="display: flex; align-items: center; justify-content: center;">
+              <div class="box" style="background-color: rgb(255, 249, 142); border-radius: 5px; padding: 20px; width: 90%;height: 70vh; display: flex; align-items: center; justify-content:  space-between; flex-wrap: wrap;">
+              
+                <div class="2con" style="height: 45vh;width: 40%; ">
+                  {% for product in products %}
+                  {% if loop.index == 100   %}
+                  <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+                  <img src="{{product.image}}" class="img-responsive big" style="width: 40%; height: 25vh; border-radius: 4px;  " alt="">
+                  <img src="{{product.image}}" class="img-responsive small" style="width: 100%; height: 25vh; border-radius: 4px;  " alt="">
+                  <h6 style="color: black;text-align: center;"> {{product.name}} </h6></a>
+                  {% elif loop.index == 101   %}
+                  <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+                  <img src="{{product.image}}" class="img-responsive big" style="width: 60%; height: 23vh; border-radius: 4px; " alt="">
+                  <img src="{{product.image}}" class="img-responsive small" style="width: 100%; height: 19vh; border-radius: 4px; " alt="">
+                   <h6 style="color: black;text-align: center;">  {{product.name}}</h6></a>
+                   {% endif %}
+                {% endfor%}
+                </div>
+                 
+                {% for product in products %}
+                {% if loop.index == 99   %}
+                <div class="1con" style="height: 45vh;width: 50%;border-radius: 7px;background-color:  white;display: flex;align-items: center;justify-content: center;">
+                  <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+                  <img src="{{product.image}}" alt="Trimme" class="img-responsive" style="width: 100%;height: 40vh; border-radius: 22px;"></a>
+                </div>
+                {% endif %}
+                {% endfor%}
+              </div>
+            </div>
+           </div>
+           
+      </div>
+  </div>
+</div>
+
+
+
+
+
+  
+     
+    <!--4 rows with images-->
+    <div class="container">
+      <h5><strong>Too Many Options to Look at?</strong></h5>
+      <h6>Let us Help You Pick</h6>
+    </div>
+     
+    <div class="container" style="background-color:rgb(135, 53, 212);">
+      <!-- row 1-->
+      <div class="row">
+        <div class="col-xs-7" style="color:white">
+          <br>
+          <h4><Strong>Professional's Picks</Strong></h4>
+          <h6>Get Set for Work <br>
+          With All the Essentials</h6>
+        </div>
+        <div class="col-xs-5">
+          <br>
+          <img src="https://ik.imagekit.io/pve74zqrg/acces/dryer2.png?updatedAt=1710520845612" class="img-responsive" style="height:19vh;width: 40%;" alt="">
+        </div>
+      </div>
+      <div class="row"  >
+        {% for product in products %}
+
+        {% if loop.index == 102  %}
+         
+        <div class="col-xs-4" style="display: flex; justify-content: center; align-items: center;">
+          <div class="box" style="background: rgb(211, 184, 236); border-radius: 10px; width: 85%; max-width: 300px; height: 33vh;">
+            <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+              <img src="{{product.image}}" class="img-responsive" style="max-width: 100%; height: 17vh; display: block; margin: 0 auto;" alt="">
+              <h6 style="text-align: center; color: black;">{{product.name}}</h6>
+              <h6 style="text-align: center; color: black;"><strong>RS.{{product.price}}</strong> </h6>
+              <h6 style="text-align: center; color: black;"><strong>{{product.specifications}}</strong></h6></a>
+          </div>
+      </div>
+      
+        
+     {% elif loop.index == 103  %}
+     <div class="col-xs-4" style="display: flex; justify-content: center; align-items: center;">
+      <div class="box" style="background: rgb(211, 184, 236); border-radius: 10px; width: 85%; max-width: 300px; height: 33vh;">
+        <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+          <img src="{{product.image}}" class="img-responsive" style="max-width: 80%; height: 16vh; display: block; margin: 0 auto;" alt="">
+          <h6 style="text-align: center; color: black;">{{product.name}}</h6>
+          <h6 style="text-align: center; color: black;"><strong>RS.{{product.price}}</strong> </h6>
+          <h6 style="text-align: center; color: black;"><strong>{{product.specifications}}</strong></h6></a>
+      </div>
+  </div>
+  {% elif loop.index == 104  %}
+  <div class="col-xs-4" style="display: flex; justify-content: center; align-items: center;">
+    <div class="box" style="background: rgb(211, 184, 236); border-radius: 10px; width: 85%; max-width: 300px; height: 33vh;">
+      <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+        <img src="{{product.image}}" class="img-responsive" style="max-width: 100%; height: 20vh; display: block; margin: 0 auto;" alt="">
+        <h6 style="text-align: center; color: black;">{{product.name}}</h6>
+        <h6 style="text-align: center; color: black;"><strong>RS.{{product.price}}</strong> </h6>
+         
+    </div>
+  </div>
+  
+      </div>
+
+      <!-- 2 nd row-->
+      <div class="row">
+        <div class="col-xs-7" style="color:white">
+          <br>
+          <h4><Strong>Entertainment Corner </Strong></h4>
+          <h6> Take Your Experience <br>
+          to the Next Level</h6>
+        </div>
+        <div class="col-xs-5">
+          <br>
+          <img src="https://ik.imagekit.io/pve74zqrg/acces/vr.png?updatedAt=1710520892300" class="img-responsive" style="height:16vh;width: 60%;" alt="">
+        </div>
+      </div>
+      <div class="row" style="display: flex;justify-content: space-between;align-items: center;">
+        {% elif loop.index == 105  %}
+        <div class="col-xs-6" style="display: flex; justify-content: center; align-items: center;">
+          <div class="box" style="background: rgb(211, 184, 236); border-radius: 10px; width: 85%; max-width: 300px; height: 30vh;">
+            <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+              <img src="{{product.image}}" class="img-responsive" style="max-width: 100%; height: 20vh; display: block; margin: 0 auto;" alt="">
+              <h6 style="text-align: center; color: black;">{{product.name}}</h6>
+              <h6 style="text-align: center; color: black;"><strong>RS.{{product.price}}</strong> </h6>
+               
+          </div>
+        </div>
+
+        {% elif loop.index == 106  %}
+        <div class="col-xs-4" style="display: flex; justify-content: center; align-items: center;">
+          <div class="box" style="background: rgb(211, 184, 236); border-radius: 10px; width: 100%;   height: 30vh;">
+            <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+              <img src="{{product.image}}" class="img-responsive big" style=" width: 70%; height: 19vh;  " alt="">
+              <img src="{{product.image}}" class="img-responsive small" style=" width: 90%; height: 19vh;  " alt="">
+              <h6 style="text-align: center; color: black;">{{product.name}}</h6>
+              <h6 style="text-align: center; color: black;"><strong>RS.{{product.price}}</strong> </h6>
+               
+          </div>
+        </div>
+        
+
+      </div>
+
+      <!-- row 3-->
+      <div class="row">
+        <div class="col-xs-7" style="color:white">
+          <br>
+          <h4><Strong> The Wellness zone</Strong></h4>
+          <h6> Keep Yourself <br>
+          Fit and Healthy</h6>
+        </div>
+        <div class="col-xs-5">
+          <br>
+           
+        </div>
+      </div>
+      <div class="row" style="display: flex;justify-content: space-between;align-items: center;">
+        {% elif loop.index == 107  %}
+        <div class="col-xs-4" style="display: flex; justify-content: center; align-items: center;">
+          <div class="box" style="background: rgb(211, 184, 236); border-radius: 10px; width: 85%; max-width: 300px; height: 36vh;">
+            <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+              <img src="{{product.image}}" class="img-responsive" style="max-width: 100%; height: 19vh; display: block; margin: 0 auto;" alt="">
+              <h6 style="text-align: center; color: black;">{{product.name}}</h6>
+              <h6 style="text-align: center; color: black;"><strong>RS.{{product.price}}</strong> </h6>
+              <h6 style="text-align: center; color: black;"><strong>{{product.specifications}}</strong></h6></a>
+               
+          </div>
+        </div>
+
+        {% elif loop.index == 108  %}
+        <div class="col-xs-4" style="display: flex; justify-content: center; align-items: center;">
+          <div class="box" style="background: rgb(211, 184, 236); border-radius: 10px; width: 85%; max-width: 300px; height: 36vh;padding: 6px;">
+            <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+              <img src="{{product.image}}" class="img-responsive" style="max-width: 100%; height: 19vh; display: block; margin: 0 auto;" alt="">
+              <h6 style="text-align: center; color: black;">{{product.name}}</h6>
+              <h6 style="text-align: center; color: black;"><strong>RS.{{product.price}}</strong> </h6>
+              <h6 style="text-align: center; color: black;"><strong>{{product.specifications}}</strong></h6></a>
+               
+          </div>
+        </div>
+
+        {% elif loop.index == 109  %}
+        <div class="col-xs-4" style="display: flex; justify-content: center; align-items: center;">
+          <div class="box" style="background: rgb(211, 184, 236); border-radius: 10px; width: 85%; max-width: 300px; height: 36vh;">
+            <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+              <img src="{{product.image}}" class="img-responsive" style="max-width: 100%; height: 19vh; display: block; margin: 0 auto;" alt="">
+              <h6 style="text-align: center; color: black;">{{product.name}}</h6>
+              <h6 style="text-align: center; color: black;"><strong>RS.{{product.price}}</strong> </h6>
+              <h6 style="text-align: center; color: black;"><strong>{{product.specifications}}</strong></h6></a>
+               
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+      <br>
+
+    </div>
+      <br>
+       
+
+    <!--slide3-->
+     
+ <div class="container" style="background-color: rgb(253, 69, 146);height: 65vh;">
+  <div class="row">
+    <div class="col-xs-12" style="color:white;">
+      <h4 style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"> Trending Now </h4>
+      <h6>Check Out Our  
+      Most Popular Picks</h6>
+      <!--<button type="button" class="btn btn-responsive" 
+      style=" background-color: rgb(255, 255, 255); width: 100px; height: 28px; display: flex;border-radius: 12px;
+       justify-content: center; align-items: center;position: absolute;right: 60px;top: 30px;"><h5 style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;color: rgb(110, 25, 221);">View All</h5></button>-->
+    </div>
+     
+  </div>
+
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+      {% for product in products %}
+
+      {% if loop.index == 110  %}
+
+      <div class="swiper-slide" style="display: flex; align-items: center; justify-content: center;">
+        <div class="box" style="height: 50vh; width: 80%; background-color: rgb(224, 155, 176); border-radius: 20px;display: flex;align-items: center;justify-content: center; ">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+          <img src="{{product.image}}" alt="Los Angeles" class="img-responsive" style="width: 100%; height: 36vh;  ">
+          <h5 style="text-align: center;  color: rgb(19, 18, 18); font-family: sans-serif;"><strong>{{product.name}}</strong></h5> 
+          <h6 style=" text-align: center; color: rgb(19, 18, 18);">Up to 43" | 4k Ultra | 4ms</h6>
+          <h5 style="text-align: center; color: rgb(61, 61, 202);"><Strong>From {{product.price}}</Strong></h5></a>
+        </div>
+      </div>
+
+      {% elif loop.index == 111  %}
+      <div class="swiper-slide" style="display: flex; align-items: center; justify-content: center;">
+
+        <div class="box" style="height: 50vh; width: 80%; background-color: rgb(224, 155, 176); border-radius: 20px;display: flex;align-items: center;justify-content: center; ">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+          <img src="{{product.image}}" alt="Los Angeles" class="img-responsive" style="width: 100%; height: 36vh;  ">
+          <h5 style="text-align: center;  color: rgb(19, 18, 18); font-family: sans-serif;"><strong>{{product.name}}</strong></h5> 
+          <h6 style=" text-align: center; color: rgb(19, 18, 18);">Samsung, MSI, ASUS & More</h6>
+          <h5 style="text-align: center; color: rgb(61, 61, 202);"><Strong>From {{product.price}}</Strong></h5></a>
+        </div>
+
+
+        
+      </div>
+      {% endif %}
+        {% endfor %}
+    </div>
+    
+  </div>
+</div>
+
+
+<!--slide 4-->
+<br>
+
+<div class="container " style="background-color: rgb(135, 58, 197);height: 55vh;">
+  <div class="row">
+    <div class="col-xs-12" style="color:white;">
+      <h4 style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Ultimate Upgrades</h4>
+      <h5>Choose from Our  Biggest Bestsellers</h5>
+      <!--<button type="button" class="btn btn-responsive" 
+      style=" background-color: rgb(255, 255, 255); width: 100px; height: 28px; display: flex;border-radius: 12px;
+       justify-content: center; align-items: center;position: absolute;right: 60px;top: 30px;"><h5 style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;color: rgb(110, 25, 221);">View All</h5></button>-->
+    </div>
+  
+   
+  </div>
+
+
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+      {% for product in products %}
+
+      {% if loop.index == 112  %}
+
+      <div class="swiper-slide" style="display: flex; align-items: center; justify-content: center;">
+        <div class="box" style=" height:40vh;width: 70%; display: flex;align-items: center;
+        justify-content: center;background-color:   rgb(223, 185, 255);border-radius: 20px;"> 
+        <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+         <img src="{{product.image}}" alt="Los Angeles" class="  img-responsive" style="width:100%;height: 25vh; ">
+         <h4 style=" text-align: center;color: rgb(19, 18, 18);font-family:sans-serif;"><strong> {{product.name}}</strong></h4>
+         <h5 style="text-align: center; color: rgb(19, 18, 18);">  {{product.specifications}}</h5>
+         <h5 style=" text-align: center;color:rgb(61, 61, 202)"><Strong> Shop Now</Strong></h5></a>
+        </div>
+      </div>
+
+      {% elif loop.index == 113  %}
+      <div class="swiper-slide" style="display: flex; align-items: center; justify-content: center;">
+
+        <div class="box" style=" height:40vh;width: 70%; display: flex;align-items: center;
+        justify-content: center;background-color:   rgb(223, 185, 255);border-radius: 20px;"> 
+        <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+         <img src="{{product.image}}" alt="Los Angeles" class="  img-responsive" style="width:100%;height: 20vh; ">
+         <h4 style=" text-align: center;color: rgb(19, 18, 18);font-family:sans-serif;"><strong> {{product.name}}</strong></h4>
+         <h5 style="text-align: center; color: rgb(19, 18, 18);">  {{product.specifications}}</h5>
+         <h5 style=" text-align: center;color:rgb(61, 61, 202)"><Strong> Shop Now</Strong></h5></a>
+        </div>
+        
+      </div>
+
+      {% elif loop.index == 114  %}
+      <div class="swiper-slide" style="display: flex; align-items: center; justify-content: center;">
+        <div class="box" style=" height:40vh;width: 70%; display: flex;align-items: center;
+        justify-content: center;background-color:   rgb(223, 185, 255);border-radius: 20px;"> 
+        <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;"> 
+         <img src="{{product.image}}" alt="Los Angeles" class="  img-responsive" style="width:100%;height: 24vh; ">
+         <h4 style=" text-align: center;color: rgb(19, 18, 18);font-family:sans-serif;"><strong> {{product.name}}</strong></h4>
+         <h5 style="text-align: center; color: rgb(19, 18, 18);">  {{product.specifications}}</h5>
+         <h5 style=" text-align: center;color:rgb(61, 61, 202)"><Strong> Shop Now</Strong></h5></a>
+        </div>
+      </div>
+
+      {% endif %}
+        {% endfor %}
+    </div>
+    
+  </div>
+</div>
+
+<br>
+
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+  var swiper = new Swiper('.swiper-container', {
+  loop: true,
+  autoplay:{delay:2500,disableOnInteraction:false}, // Enable loop mode
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+});
+ </script>
+ <script>
+  
+  function handleSearchRedirect() {
+      var screenWidth = window.innerWidth;
+      var searchLink = document.getElementById('searchLink');
+      if (screenWidth < 768) { // For small screens
+          searchForm.removeAttribute('action');
+          searchLink.setAttribute('href', "{{ url_for('searchbar') }}");
+      } else { // For larger screens
+          searchLink.removeAttribute('href');
+      }
+  }
+
+  // Run the function on page load and window resize
+  document.addEventListener('DOMContentLoaded', handleSearchRedirect);
+  window.addEventListener('resize', handleSearchRedirect);
+
+
+</script>
+
+<script>
+// Function to handle form submission
+function validateSearchForm(event) {
+    var searchInput = document.getElementById('searchInput');
+    
+    // Check if the input field is empty
+    if (searchInput.value.trim() === '') {
+        event.preventDefault(); // Prevent form submission if input is empty
+    }
+}
+
+// Add event listener to the form for form submission validation
+document.getElementById('searchForm').addEventListener('submit', validateSearchForm);
+</script>
+
+  
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.min.js.js"></script>
+</body>
+</html>

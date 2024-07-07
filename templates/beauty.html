@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Vendors/Profesnional Cares</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/mobiles.css">
+    <script src="https://unpkg.com/swiper@6.8.4/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@6.8.4/swiper-bundle.min.css">
+    <style>
+      body
+      {
+        overflow-x: hidden;
+      }
+      .big
+      {
+        display: block;
+      }
+      .small
+      {
+        display: none;
+      }
+      @media only screen and (max-width: 768px) {
+        .big
+        {
+          display: none;
+        }
+        .small
+        {
+          display: block;
+        }
+        body
+      {
+        overflow-x: hidden;
+      }
+      }
+    </style>
+  </head>
+  
+  <body>
+     <!--nav-->
+    <nav class="navbar   navbar-default   navbar-fixed-top" id="topnav" style=" background:white">
+      <div class="container-fluid" style="margin-top: 10px;display: flex;align-items: center;justify-content: center;">
+         <div class="row">
+  
+        <!--title-->
+        <div class="col-xs-3 title">
+           <h4 style="color: black; font-family: Sacramento, cursive;">  Personal Care  </h4> 
+        </div>
+  
+        <div class="col-xs-2 b-title">
+           <h3 style="color: black; font-family: Sacramento, cursive;margin-top: 15px;margin-right: 120px;">   Personal Care  </h3>
+       </div>
+  
+         
+       <!--search bar FOR BIG SCREEN-->
+  <div class="col-xs-4  big">
+  <a id="searchLink" href="{{ url_for('searchbar') }}" style="text-decoration: none;">
+      <form class="navbar-form navbar-left search" action="{{ url_for('search') }}" id="searchForm" method="GET" >
+          <div class="input-group  big">
+            <input id="searchInput" type="text" class="form-control" placeholder="Search For products,Brands and More" name="search">
+               <div class="input-group-btn">
+                  <button id="searchButton" class="btn btn-default" type="submit">
+                      <i class="glyphicon glyphicon-search"></i>
+                  </button>
+              </div>
+          </div>
+      </form>
+  </a>
+  </div>
+  
+  
+  <!--CART-->
+       <div class="col-xs-3">        
+          <a href="{{ url_for('cart') }}" style="display: flex; align-items: center; justify-content: space-around;" class="navbar-brand cart" id="my">
+            <span id="cart-icon" class="glyphicon glyphicon-shopping-cart"  style="color: black;margin-bottom: 8px;"></span>
+            <h4 id="cart-text" style="color: black;margin-left: 5px;   ">Cart</h4>
+        </a>
+       </div>
+  
+        <!--accout-->
+        
+    <div class="col-xs-3"   >
+    
+     {% if current_user.is_authenticated %}
+     
+   
+   <div class="dropdown">
+    
+    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+    style="background-color:rgb(255, 255, 255); color:rgb(0, 0, 0);margin-left: 2px;">
+  <h5>
+    <span class="glyphicon glyphicon-user" style="display: inline-block; color:black;">Account</span>
+    <span class="caret"></span>
+  </h5>  
+  </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <ul class="list-unstyled" style="text-align: center;">
+        <li>
+           <a href="{{ url_for('profile', user_id=current_user.id) }}">
+      <h5 style="display: block;color: black;">  <span class="glyphicon glyphicon-user" style="display: inline-block;color:black;"> My Profile</h5></span></a></li>
+        <li><a class="dropdown-item" href="{{ url_for('logout') }}"><h5 style="color: black;"> Logout <span class="glyphicon glyphicon-log-out"></span> </h5> </a></li>
+        <li><a class="dropdown-item" href="{{ url_for('dashboard') }}"><h5 style="color: black;"> Orders</h5></a></li>
+      </ul>
+    </div>
+  </div>
+  
+  
+  {% else %}
+   
+  <a  href="{{ url_for('login') }}" style="display: flex; align-items: center; justify-content: space-around;" class="navbar-brand cart" id="my">
+  <span style="display: inline-block; color:black;margin-bottom: 8px;"  class="glyphicon glyphicon-log-in"></span>
+  <h5 id="cart-text" style="color: black;margin-left: 5px;   ">LOGIN</h5>
+  </a>
+    
+  {% endif %}
+  </div>
+   
+       
+  
+        
+  <!--2 nd for search bar small screen-->
+         
+  <div class="col-xs-3 sear">
+    <a id="searchLink" href="{{ url_for('searchbar') }}" style="text-decoration: none;">
+       
+              <div class="input-group-btn">
+                <button id="searchButton" class="btn btn-default " type="submit" style=" font-size: 20px;border: none;margin-top: 10px;">
+                     
+                  <span class="glyphicon glyphicon-search"></span>
+              </button>
+              </div>
+           
+  </a>
+   </div>
+         
+  
+      </div>    
+     
+      </div>
+  </nav>
+  <!--8 icons-->
+  
+<div class="container"  style="margin-top: 100px;">
+    <div class="row" style="display:flex;align-items: center;justify-content: space-between;">
+      
+      <div class="col-xs-4 big">
+        <div class="circ" style="width: 30%;height: 20vh;border-radius: 50%;border: 0.01px solid rgb(218, 211, 211);display: flex;align-items: center;justify-content: center;">
+          <a href="/filter_args/face wash/face serum" style="text-decoration: none;"> 
+          <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Himalaya_body_lotion_png_image-removebg-preview.png?updatedAt=1711879541397" class="img-responsive " style="height:18vh;width: 100%;" alt="">
+           
+          </a>
+        </div>
+        <div class="circ" style="width: 30%;height: 3vh;"> 
+        <h6 style="color: black;text-align: center;">skin care</h6></div>
+      </div>
+
+      <div class="col-xs-4 small">
+        <div class="circ" style="width: 100%;height: 15vh;border-radius: 50%;border: 0.1px solid rgb(218, 211, 211);display: flex;align-items: center;justify-content: center;">
+          <a href="/filter_args/face wash/face serum" style="text-decoration: none;"> 
+          <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Himalaya_body_lotion_png_image-removebg-preview.png?updatedAt=1711879541397" class="img-responsive " style="height:18vh;width: 100%;" alt="">
+           
+          </a>
+        </div>
+        <h6 style="color: black;text-align: center;">skin care</h6>
+      </div>
+
+      
+      <div class="col-xs-4 big">
+        <div class="circ" style="width: 30%;height: 20vh;border-radius: 50%;border: 0.01px solid rgb(218, 211, 211);display: flex;align-items: center;justify-content: center;">
+          <a href="/filter_args/hair Conditioner/hair serum" style="text-decoration: none;"> 
+      
+            <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Indulekha_Bringha_Oil_Reduces_Hair_Fall_And_Grows_Hair_100__Ayurvedic_Oil-removebg-preview.png?updatedAt=1711880125147" class="img-responsive big" style="height:15vh;width: 99%;" alt="">
+           
+          </a>
+        </div>
+        <div class="circ" style="width: 30%;height: 3vh;"> 
+        <h6 style="color: black;text-align: center;">Hair care</h6></div>
+      </div>
+
+      <div class="col-xs-4 small">
+        <div class="circ" style="width: 100%;height: 15vh;border-radius: 50%;border: 0.01px solid rgb(218, 211, 211);display: flex;align-items: center;justify-content: center;">
+          <a href="/filter_args/hair Conditioner/hair serum" style="text-decoration: none;"> 
+      
+            <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Indulekha_Bringha_Oil_Reduces_Hair_Fall_And_Grows_Hair_100__Ayurvedic_Oil-removebg-preview.png?updatedAt=1711880125147" class="img-responsive " style="height:15vh;width: 99%;" alt="">
+           
+          </a>
+        </div>
+        <h6 style="color: black;text-align: center;">Hair care</h6>
+      </div>
+
+
+      <div class="col-xs-4 big">
+        <div class="circ" style="width: 30%;height: 20vh;border-radius: 50%;border: 0.01px solid rgb(218, 211, 211);display: flex;align-items: center;justify-content: center;">
+          <a href="/filter_speci/makeup" style="text-decoration: none;"> 
+            <img src="https://ik.imagekit.io/indueo3hy/cosmotics/lakmene.png?updatedAt=1711871953492" class="img-responsive " style="height:11vh;width: 100%;" alt="">
+           
+          </a>
+        </div>
+        <div class="circ" style="width: 30%;height: 3vh;"> 
+        <h6 style="color: black;text-align: center;">Make Up</h6></div>
+      </div>
+
+       
+      <div class="col-xs-4 small">
+        <div class="circ" style="width: 100%;height: 15vh;border-radius: 50%;border: 0.01px solid rgb(218, 211, 211);display: flex;align-items: center;justify-content: center;">
+          <a href="/filter_speci/makeup" style="text-decoration: none;"> 
+            <img src="https://ik.imagekit.io/indueo3hy/cosmotics/lakmene.png?updatedAt=1711871953492" class="img-responsive" style="height:11vh;width: 100%;" alt="">
+           
+          </a>
+        </div>
+        <h6 style="color: black;text-align: center;">Make Up</h6>
+      </div>
+
+    
+      
+    
+
+     
+  </div>
+  <br>
+  <br>
+
+  <div class="row" style="display:flex;align-items: center;justify-content: space-between;">
+
+    <div class="col-xs-4 big">
+      <div class="circ" style="width: 30%;height: 20vh;border-radius: 50%;border: 0.01px solid rgb(218, 211, 211);display: flex;align-items: center;justify-content: center;">
+        <a href="/filter_speci/Fragrance" style="text-decoration: none;"> 
+          <img src="https://ik.imagekit.io/indueo3hy/cosmotics/fogg.png?updatedAt=1711871942334" class="img-responsive " style="height:18vh;width: 99%;" alt="">
+        </a>
+      </div>
+      <div class="circ" style="width: 30%;height: 3vh;"> 
+      <h6 style="color: black;text-align: center;">Fragrances</h6></div>
+    </div>
+
+    <div class="col-xs-4 small">
+      <div class="circ" style="width: 100%;height: 15vh;border-radius: 50%;border: 0.01px solid rgb(218, 211, 211);display: flex;align-items: center;justify-content: center;">
+        <a href="/filter_speci/Fragrance" style="text-decoration: none;"> 
+          <img src="https://ik.imagekit.io/indueo3hy/cosmotics/fogg.png?updatedAt=1711871942334" class="img-responsive " style="height:11vh;width: 99%;" alt="">
+        </a>
+      </div>
+       
+      <h6 style="color: black;text-align: center;">Fragrances</h6> 
+    </div>
+       
+     
+
+    <div class="col-xs-4 big">
+      <div class="circ" style="width: 30%;height: 20vh;border-radius: 50%;border: 0.01px solid rgb(218, 211, 211);display: flex;align-items: center;justify-content: center;">
+        <a href="/filter_speci/Grooming" style="text-decoration: none;"> 
+          <img src="https://ik.imagekit.io/indueo3hy/cosmotics/gillete.png?updatedAt=1711871950344" class="img-responsive " style="height:18vh;width: 99%;" alt="">
+        </a>
+      </div>
+      <div class="circ" style="width: 30%;height: 3vh;"> 
+      <h6 style="color: black;text-align: center;">Men's Grooming</h6></div>
+    </div>
+
+    <div class="col-xs-4 small">
+      <div class="circ" style="width: 100%;height: 15vh;border-radius: 50%;border: 0.01px solid rgb(218, 211, 211);display: flex;align-items: center;justify-content: center;">
+        <a href="/filter_speci/Grooming" style="text-decoration: none;"> 
+          <img src="https://ik.imagekit.io/indueo3hy/cosmotics/gillete.png?updatedAt=1711871950344" class="img-responsive " style="height:13vh;width: 99%;" alt="">
+        </a>
+      </div>
+       
+      <h6 style="color: black;text-align: center;">Men's Grooming</h6> 
+    </div>
+
+
+    <div class="col-xs-4 big">
+      <div class="circ" style="width: 30%;height: 20vh;border-radius: 50%;border: 0.01px solid rgb(218, 211, 211);display: flex;align-items: center;justify-content: center;">
+        <a href="/filter_arguments/shower gel/hair Conditioner/hair serum" style="text-decoration: none;"> 
+          <img src="https://ik.imagekit.io/indueo3hy/cosmotics/kindpng_7347523.png?updatedAt=1711879002902" class="img-responsive" style="height:18vh;width: 99%;" alt="">
+        </a>
+      </div>
+      <div class="circ" style="width: 30%;height: 3vh;"> 
+      <h6 style="color: black;text-align: center;">Bath & Body</h6></div>
+    </div>
+    
+
+    <div class="col-xs-4 small">
+      <div class="circ" style="width: 100%;height: 15vh;border-radius: 50%;border: 0.01px solid rgb(218, 211, 211);display: flex;align-items: center;justify-content: center;">
+        <a href="/filter_arguments/shower gel/hair Conditioner/hair serum" style="text-decoration: none;"> 
+          <img src="https://ik.imagekit.io/indueo3hy/cosmotics/kindpng_7347523.png?updatedAt=1711879002902" class="img-responsive" style="height:13vh;width: 99%;" alt="">
+        </a>
+      </div>
+       
+      <h6 style="color: black;text-align: center;">Bath & Body</h6> 
+    </div>
+
+      
+
+  
+</div>
+
+</div>
+<br> 
+<!--swiper-->
+ <div class="container-fluid big" style="height: 90vh;width: 100%;background-color: #F3CCF3;margin-top: 110px;"> 
+  <div class="row" style="display: flex;align-items: center;justify-content: center;">
+    <h3 style="color: black;font-family:Arial, Helvetica, sans-serif;"><strong>Popular  Picks</strong> </h3>
+  </div>
+ <div class="swiper big"  style="height: 40vh;width: 100%;background-color: #F3CCF3;">
+   
+  <div class="swiper-wrapper">
+    
+    <div class="swiper-slide"  style="display: flex;justify-content: center;align-items: center;">
+      <div class="box" style="height: 26vh;width:80%;background-color:#E9A8F2;border-radius: 13px; display: flex;justify-content: center;align-items: center;">
+        <a href="/filter_products/Moisturizer" style="text-decoration: none;"> 
+          <img src="https://ik.imagekit.io/indueo3hy/cosmotics/kindpng_7347523.png?updatedAt=1711879002902" class="img-responsive" style="height:30vh;width:100%" alt="">           
+          
+          <h5 style="color: black;text-align: center;">   Moistuizers </h5>  </a>    
+      </div>
+        
+    </div>
+
+    <div class="swiper-slide"  style="display: flex;justify-content: center;align-items: center;">
+      <div class="box" style="height: 26vh;width:80%;background-color:#E9A8F2;border-radius: 13px; display: flex;justify-content: center;align-items: center;">
+        <a href="/filter_args/perfume/Deodrants" style="text-decoration: none;"> 
+          <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Denver_Hamilton_Exclusive_Collection__perfume+dedorant__Set-removebg-preview.png?updatedAt=1711885764745" class="img-responsive" style="height:30vh;width:100%" alt="">           
+          
+          <h5 style="color: black;text-align: center;">   Deodorants </h5>  </a>    
+      </div>
+        
+    </div>
+
+    <div class="swiper-slide"  style="display: flex;justify-content: center;align-items: center;">
+      <div class="box" style="height: 26vh;width:80%;background-color:#E9A8F2;border-radius: 13px; display: flex;justify-content: center;align-items: center;">
+        <a href="/filter_products/face serum" style="text-decoration: none;"> 
+          <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Dr__Rashel_Vitamin_C_Brightening_And_Anti-aging_Face_Serum_50_Ml__1_-removebg-preview.png?updatedAt=1711887138120" class="img-responsive" style="height:30vh;width:100%" alt="">           
+          
+          <h5 style="color: black;text-align: center;">  Face Serums </h5>  </a>    
+      </div>
+        
+    </div>
+
+    <div class="swiper-slide"  style="display: flex;justify-content: center;align-items: center;">
+      <div class="box" style="height: 26vh;width:80%;background-color:#E9A8F2;border-radius: 13px; display: flex;justify-content: center;align-items: center;">
+        <a href="/filter_products/shower gel" style="text-decoration: none;"> 
+          <img src="https://ik.imagekit.io/indueo3hy/cosmotics/TRESemm%C3%A9_Keratin_Smooth_Shampoo_and_Conditioner_Set-removebg-preview.png?updatedAt=1711887341118" class="img-responsive" style="height:30vh;width:100%" alt="">           
+          
+          <h5 style="color: black;text-align: center;">  Shower Gels </h5>  </a>    
+      </div>
+        
+    </div>
+
+    <div class="swiper-slide"  style="display: flex;justify-content: center;align-items: center;">
+      <div class="box" style="height: 26vh;width:80%;background-color:#E9A8F2;border-radius: 13px; display: flex;justify-content: center;align-items: center;">
+        <a href="/filter_products/face wash" style="text-decoration: none;"> 
+          <img src="https://ik.imagekit.io/indueo3hy/cosmotics/How_to_Have_Incredible_Winter_Skin_No_Matter_Where_You_Live-removebg-preview.png?updatedAt=1711887497772" class="img-responsive" style="height:30vh;width:100%" alt="">           
+          
+          <h5 style="color: black;text-align: center;"> Facewash </h5>  </a>    
+      </div>
+        
+    </div>
+    
+  </div>
+ </div>
+
+  <div class="swiper big"  style="height: 40vh;width: 100%;background-color: #F3CCF3;"> 
+  <div class="swiper-wrapper">
+    
+    <div class="swiper-slide"  style="display: flex;justify-content: center;align-items: center;">
+      <div class="box" style="height: 22vh;width:80%;background-color:#E9A8F2;border-radius: 13px; display: flex;justify-content: center;align-items: center;">
+        <a href="/filter_products/hair Conditioner" style="text-decoration: none;"> 
+          <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Head___Shoulders_Supreme__Scalp_Care_and_Dandruff_Treatment_Shampoo_and_Conditioner_Bundle-removebg-preview.png?updatedAt=1711888260805" class="img-responsive" style="height:26vh;width:100%" alt="">           
+          
+          <h5 style="color: black;text-align: center;">   Conditioners </h5>  </a>    
+      </div>
+        
+    </div>
+
+    <div class="swiper-slide"  style="display: flex;justify-content: center;align-items: center;">
+      <div class="box" style="height: 22vh;width:80%;background-color:#E9A8F2;border-radius: 13px; display: flex;justify-content: center;align-items: center;">
+        <a href="/filter_products/hair serum" style="text-decoration: none;"> 
+          <img src="https://ik.imagekit.io/indueo3hy/cosmotics/10_Best_Hair_Serums_For_Dry_Hair___2024__1_-removebg-preview.png?updatedAt=1711888986080" class="img-responsive" style="height:26vh;width:100%" alt="">           
+          
+          <h5 style="color: black;text-align: center;">   Hair Serums </h5>  </a>    
+      </div>
+        
+    </div>
+
+    <div class="swiper-slide"  style="display: flex;justify-content: center;align-items: center;">
+      <div class="box" style="height: 22vh;width:80%;background-color:#E9A8F2;border-radius: 13px; display: flex;justify-content: center;align-items: center;">
+        <a href="/filter_products/makeup" style="text-decoration: none;"> 
+          <img src="https://ik.imagekit.io/indueo3hy/cosmotics/The_Best_Drugstore_Blushes___Beauty___Meg_O__on_the_Go-removebg-preview.png?updatedAt=1711890686177" class="img-responsive" style="height:26vh;width:100%" alt="">           
+          
+          <h5 style="color: black;text-align: center;">   Face Makeup </h5>  </a>    
+      </div>
+        
+    </div>
+
+  </div>
+</div>
+  
+  
+  
+ 
+</div>
+
+   
+
+<script>
+  var swiper = new Swiper(".big", {
+    slidesPerView: 3,
+    spaceBetween: 20,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+  });
+</script>
+<!--small screen-->
+<div class="container-fluid small" style="height: 90vh;width: 100%;background-color: #F3CCF3;margin-top: 80px;"> 
+  <div class="row" style="margin-left: 50px;">
+    <h3 style="color: black;font-family:Arial, Helvetica, sans-serif;"><strong>Popular  Picks</strong> </h3>
+  </div>
+<div class="swiper small" style="height: 40vh;width: 100%;background-color: #F3CCF3;">
+   
+  <div class="swiper-wrapper">
+    
+    <div class="swiper-slide"  style="display: flex;justify-content: center;align-items: center;">
+      <div class="box" style="height: 22vh;width:80%;background-color:#E9A8F2;border-radius: 13px; display: flex;justify-content: center;align-items: center;">
+        <a href="/filter_products/Moisturizer" style="text-decoration: none;"> 
+          <img src="https://ik.imagekit.io/indueo3hy/cosmotics/kindpng_7347523.png?updatedAt=1711879002902" class="img-responsive" style="height:26vh;width:100%" alt="">           
+          
+          <h5 style="color: black;text-align: center;">   Moistuizers </h5>  </a>    
+      </div>
+        
+    </div>
+
+    <div class="swiper-slide"  style="display: flex;justify-content: center;align-items: center;">
+      <div class="box" style="height: 22vh;width:80%;background-color:#E9A8F2;border-radius: 13px; display: flex;justify-content: center;align-items: center;">
+        <a href="/filter_args/perfume/Deodrants" style="text-decoration: none;"> 
+          <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Denver_Hamilton_Exclusive_Collection__perfume+dedorant__Set-removebg-preview.png?updatedAt=1711885764745" class="img-responsive" style="height:26vh;width:100%" alt="">           
+          
+          <h5 style="color: black;text-align: center;">   Deodorants </h5>  </a>    
+      </div>
+        
+    </div>
+
+    <div class="swiper-slide"  style="display: flex;justify-content: center;align-items: center;">
+      <div class="box" style="height: 22vh;width:80%;background-color:#E9A8F2;border-radius: 13px; display: flex;justify-content: center;align-items: center;">
+        <a href="/filter_products/face serum" style="text-decoration: none;"> 
+          <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Dr__Rashel_Vitamin_C_Brightening_And_Anti-aging_Face_Serum_50_Ml__1_-removebg-preview.png?updatedAt=1711887138120" class="img-responsive" style="height:26vh;width:100%" alt="">           
+          
+          <h5 style="color: black;text-align: center;">  Face Serums </h5>  </a>    
+      </div>
+        
+    </div>
+
+    <div class="swiper-slide"  style="display: flex;justify-content: center;align-items: center;">
+      <div class="box" style="height: 22vh;width:80%;background-color:#E9A8F2;border-radius: 13px; display: flex;justify-content: center;align-items: center;">
+        <a href="/filter_products/shower gel" style="text-decoration: none;"> 
+          <img src="https://ik.imagekit.io/indueo3hy/cosmotics/TRESemm%C3%A9_Keratin_Smooth_Shampoo_and_Conditioner_Set-removebg-preview.png?updatedAt=1711887341118" class="img-responsive" style="height:26vh;width:100%" alt="">           
+          
+          <h5 style="color: black;text-align: center;">  Shower Gels </h5>  </a>    
+      </div>
+        
+    </div>
+
+    <div class="swiper-slide"  style="display: flex;justify-content: center;align-items: center;">
+      <div class="box" style="height: 22vh;width:80%;background-color:#E9A8F2;border-radius: 13px; display: flex;justify-content: center;align-items: center;">
+        <a href="/filter_products/face wash" style="text-decoration: none;"> 
+          <img src="https://ik.imagekit.io/indueo3hy/cosmotics/How_to_Have_Incredible_Winter_Skin_No_Matter_Where_You_Live-removebg-preview.png?updatedAt=1711887497772" class="img-responsive" style="height:26vh;width:100%" alt="">           
+          
+          <h5 style="color: black;text-align: center;"> Facewash  </h5>  </a>    
+      </div>
+        
+    </div>
+    
+</div>
+</div>
+<!--slide 2-->
+<div class="swiper small" style="height: 40vh;width: 100%;background-color: #F3CCF3;">
+   
+  <div class="swiper-wrapper">
+    
+    <div class="swiper-slide"  style="display: flex;justify-content: center;align-items: center;">
+      <div class="box" style="height: 22vh;width:80%;background-color:#E9A8F2;border-radius: 13px; display: flex;justify-content: center;align-items: center;">
+        <a href="/filter_products/hair Conditioner" style="text-decoration: none;"> 
+          <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Head___Shoulders_Supreme__Scalp_Care_and_Dandruff_Treatment_Shampoo_and_Conditioner_Bundle-removebg-preview.png?updatedAt=1711888260805" class="img-responsive" style="height:26vh;width:100%" alt="">           
+          
+          <h5 style="color: black;text-align: center;">   Conditioners </h5>  </a>    
+      </div>
+        
+    </div>
+
+    <div class="swiper-slide"  style="display: flex;justify-content: center;align-items: center;">
+      <div class="box" style="height: 22vh;width:80%;background-color:#E9A8F2;border-radius: 13px; display: flex;justify-content: center;align-items: center;">
+        <a href="/filter_products/hair serum" style="text-decoration: none;"> 
+          <img src="https://ik.imagekit.io/indueo3hy/cosmotics/10_Best_Hair_Serums_For_Dry_Hair___2024__1_-removebg-preview.png?updatedAt=1711888986080" class="img-responsive" style="height:26vh;width:100%" alt="">           
+          
+          <h5 style="color: black;text-align: center;">   Hair Serums </h5>  </a>    
+      </div>
+        
+    </div>
+
+    <div class="swiper-slide"  style="display: flex;justify-content: center;align-items: center;">
+      <div class="box" style="height: 22vh;width:80%;background-color:#E9A8F2;border-radius: 13px; display: flex;justify-content: center;align-items: center;">
+        <a href="/filter_products/makeup" style="text-decoration: none;"> 
+          <img src="https://ik.imagekit.io/indueo3hy/cosmotics/The_Best_Drugstore_Blushes___Beauty___Meg_O__on_the_Go-removebg-preview.png?updatedAt=1711890686177" class="img-responsive" style="height:26vh;width:100%" alt="">           
+          
+          <h5 style="color: black;text-align: center;">   Face Makeup </h5>  </a>    
+      </div>
+        
+    </div>
+</div>
+</div>
+
+
+ </div>
+ 
+
+<script>
+  var swiper = new Swiper(".small", {
+    slidesPerView: 2,
+    spaceBetween: 20,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+  });
+</script>
+
+<br>
+<!--yellow background swipe r-->
+<div class="container-fluid big" style="height: 37vh;width: 100%;background-color: white ;"> 
+  <div class="row " style="display: flex;align-items: center;justify-content: center;">
+    <h5 style="color: black;"><strong>Exclusive Products</strong> </h5>
+  </div>
+  <div class="swiper yellow "   >
+    <div class="swiper-wrapper"  >
+      
+      {% for product in products %}
+  
+      
+      {% if loop.index == 267  %}
+       
+      <div class="swiper-slide" style="position: relative;display: flex;align-items: center;justify-content: center;">
+        <div class="box" style="height: 28vh;width: 80%;background-color: rgb(255, 255, 255);border-radius: 13px;position: relative;">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;display: flex;flex-direction: column;align-items: center;">
+                <!-- Background image -->
+                <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Yellow%20White%20Background%20Vertical.jpeg?updatedAt=1711892362498" class="img-responsive" style="height: 28vh;width: 100%;border-radius: 13px;" alt="">
+                <!-- Product image -->
+                <img src="{{ product.image }}" class="img-responsive" style="height: 32vh;width: 40%;position: absolute;padding: 10px; " alt="">
+                <!-- Product name -->
+                <h5 style="color: black;text-align: center;font-family: Arial, Helvetica, sans-serif;">Pursense</h5>
+                 
+            </a>    
+        </div>
+    </div>
+
+    {% elif loop.index == 268  %}
+       
+    <div class="swiper-slide" style="position: relative;display: flex;align-items: center;justify-content: center;">
+      <div class="box" style="height: 28vh;width: 80%;background-color: rgb(255, 255, 255);border-radius: 13px;position: relative;">
+        <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;display: flex;flex-direction: column;align-items: center;">
+              <!-- Background image -->
+              <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Yellow%20White%20Background%20Vertical.jpeg?updatedAt=1711892362498" class="img-responsive" style="height: 28vh;width: 100%;border-radius: 13px;" alt="">
+              <!-- Product image -->
+              <img src="{{ product.image }}" class="img-responsive" style="height: 32vh;width: 40%;position: absolute;padding: 10px; " alt="">
+              <!-- Product name -->
+              <h5 style="color: black;text-align: center;font-family: Arial, Helvetica, sans-serif;">Lakme</h5>
+               
+               
+          </a>    
+      </div>
+  </div>
+
+  {% elif loop.index == 269  %}
+       
+  <div class="swiper-slide" style="position: relative;display: flex;align-items: center;justify-content: center;">
+    <div class="box" style="height: 28vh;width: 80%;background-color: rgb(255, 255, 255);border-radius: 13px;position: relative;">
+      <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;display: flex;flex-direction: column;align-items: center;">
+            <!-- Background image -->
+            <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Yellow%20White%20Background%20Vertical.jpeg?updatedAt=1711892362498" class="img-responsive" style="height: 28vh;width: 100%;border-radius: 13px;" alt="">
+            <!-- Product image -->
+            <img src="{{ product.image }}" class="img-responsive" style="height: 28vh;width: 40%;position: absolute;padding: 10px; " alt="">
+            <!-- Product name -->
+            <h5 style="color: black;text-align: center;font-family: Arial, Helvetica, sans-serif;">Fiama Men</h5>
+             
+        </a>    
+    </div>
+</div>
+
+{% elif loop.index == 270  %}
+       
+<div class="swiper-slide" style="position: relative;display: flex;align-items: center;justify-content: center;">
+  <div class="box" style="height: 28vh;width: 80%;background-color: rgb(255, 255, 255);border-radius: 13px;position: relative;">
+    <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;display: flex;flex-direction: column;align-items: center;">
+          <!-- Background image -->
+          <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Yellow%20White%20Background%20Vertical.jpeg?updatedAt=1711892362498" class="img-responsive" style="height: 28vh;width: 100%;border-radius: 13px;" alt="">
+          <!-- Product image -->
+          <img src="{{ product.image }}" class="img-responsive" style="height: 32vh;width: 70%;position: absolute;padding: 10px; " alt="">
+          <!-- Product name -->
+          <h5 style="color: black;text-align: center;font-family: Arial, Helvetica, sans-serif;"> Dove Men   </h5>
+           
+      </a>    
+  </div>
+</div>
+    
+            {% endif %}
+      {% endfor %}
+       
+       
+      
+    </div>
+     
+  </div>
+ </div>
+
+ <script>
+  var swiper = new Swiper(".yellow", {
+     
+    slidesPerView: 3,
+    spaceBetween: 10,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+  });
+</script>
+
+<!--for small screen-->
+<div class="container-fluid small" style="height: 37vh;width: 100%;background-color: white ;"> 
+  <div class="row " style="display: flex;align-items: center;justify-content: center;">
+    <h5 style="color: black;"><strong>Exclusive Products</strong> </h5>
+  </div>
+  <div class="swiper yel "   >
+    <div class="swiper-wrapper"  >
+      
+      {% for product in products %}
+  
+      
+      {% if loop.index == 267  %}
+       
+      <div class="swiper-slide" style="position: relative;display: flex;align-items: center;justify-content: center;">
+        <div class="box" style="height: 28vh;width: 80%;background-color: rgb(255, 255, 255);border-radius: 13px;position: relative;">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;display: flex;flex-direction: column;align-items: center;">
+                <!-- Background image -->
+                <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Yellow%20White%20Background%20Vertical.jpeg?updatedAt=1711892362498" class="img-responsive" style="height: 28vh;width: 100%;border-radius: 13px;" alt="">
+                <!-- Product image -->
+                <img src="{{ product.image }}" class="img-responsive" style="height: 32vh;width: 100%;position: absolute;padding: 10px; " alt="">
+                <!-- Product name -->
+                <h5 style="color: black;text-align: center;font-family: Arial, Helvetica, sans-serif;">Pursense</h5>
+                 
+            </a>    
+        </div>
+    </div>
+
+    {% elif loop.index == 268  %}
+       
+    <div class="swiper-slide" style="position: relative;display: flex;align-items: center;justify-content: center;">
+      <div class="box" style="height: 28vh;width: 80%;background-color: rgb(255, 255, 255);border-radius: 13px;position: relative;">
+        <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;display: flex;flex-direction: column;align-items: center;">
+              <!-- Background image -->
+              <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Yellow%20White%20Background%20Vertical.jpeg?updatedAt=1711892362498" class="img-responsive" style="height: 28vh;width: 100%;border-radius: 13px;" alt="">
+              <!-- Product image -->
+              <img src="{{ product.image }}" class="img-responsive" style="height: 32vh;width: 100%;position: absolute;padding: 10px; " alt="">
+              <!-- Product name -->
+              <h5 style="color: black;text-align: center;font-family: Arial, Helvetica, sans-serif;">Lakme</h5>
+               
+               
+          </a>    
+      </div>
+  </div>
+
+  {% elif loop.index == 269  %}
+       
+  <div class="swiper-slide" style="position: relative;display: flex;align-items: center;justify-content: center;">
+    <div class="box" style="height: 28vh;width: 80%;background-color: rgb(255, 255, 255);border-radius: 13px;position: relative;">
+      <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;display: flex;flex-direction: column;align-items: center;">
+            <!-- Background image -->
+            <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Yellow%20White%20Background%20Vertical.jpeg?updatedAt=1711892362498" class="img-responsive" style="height: 28vh;width: 100%;border-radius: 13px;" alt="">
+            <!-- Product image -->
+            <img src="{{ product.image }}" class="img-responsive" style="height: 28vh;width: 100%;position: absolute;padding: 10px; " alt="">
+            <!-- Product name -->
+            <h5 style="color: black;text-align: center;font-family: Arial, Helvetica, sans-serif;">Fiama Men</h5>
+             
+        </a>    
+    </div>
+</div>
+
+{% elif loop.index == 270  %}
+       
+<div class="swiper-slide" style="position: relative;display: flex;align-items: center;justify-content: center;">
+  <div class="box" style="height: 28vh;width: 80%;background-color: rgb(255, 255, 255);border-radius: 13px;position: relative;">
+    <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;display: flex;flex-direction: column;align-items: center;">
+          <!-- Background image -->
+          <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Yellow%20White%20Background%20Vertical.jpeg?updatedAt=1711892362498" class="img-responsive" style="height: 28vh;width: 100%;border-radius: 13px;" alt="">
+          <!-- Product image -->
+          <img src="{{ product.image }}" class="img-responsive" style="height: 30vh;width: 100%;position: absolute;padding: 10px; " alt="">
+          <!-- Product name -->
+          <h5 style="color: black;text-align: center;font-family: Arial, Helvetica, sans-serif;"> Dove Men   </h5>
+           
+      </a>    
+  </div>
+</div>
+    
+            {% endif %}
+      {% endfor %}
+       
+       
+      
+    </div>
+     
+  </div>
+ </div>
+
+ <script>
+  var swiper = new Swiper(".yel", {
+     
+    slidesPerView: 2,
+    spaceBetween: 10,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+  });
+</script>
+
+<br>
+<!--sky blue background-->
+<div class="container-fluid big" style="background:linear-gradient(to bottom,skyblue, white);height: 40vh;width: 100%;"> 
+  <div class="row "  >
+    <h4 style="color: black;margin-left: 50px;"><strong>Here New Products!</strong> </h4>
+  </div>
+  <div class="swiper blue "   >
+    <div class="swiper-wrapper"  >
+      
+      {% for product in products %}
+  
+      
+      {% if loop.index == 271  %}
+       
+      <div class="swiper-slide" style="position: relative;display: flex;align-items: center;justify-content: center;">
+        <div class="box" style="height: 28vh;width: 80%; background:linear-gradient(to left,#DFF5FF, white);border-radius: 13px;position: relative;">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;display: flex;flex-direction: column;align-items: center;">
+                <!-- Background image -->
+                 
+                <!-- Product image -->
+                <img src="{{ product.image }}" class="img-responsive" style="height: 32vh;width: 40%; " alt="">
+                <!-- Product name -->
+                <h5 style="color: black;text-align: center;font-family: Arial, Helvetica, sans-serif;">{{product.name}}</h5>
+                 
+            </a>    
+        </div>
+    </div>
+
+    {% elif loop.index == 272  %}
+       
+    <div class="swiper-slide" style="position: relative;display: flex;align-items: center;justify-content: center;">
+          <div class="box" style="height: 28vh;width: 80%; background:linear-gradient(to left,#DFF5FF, white);border-radius: 13px;position: relative;">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;display: flex;flex-direction: column;align-items: center;">
+                <!-- Background image -->
+                 
+                <!-- Product image -->
+                <img src="{{ product.image }}" class="img-responsive" style="height: 32vh;width: 40%; " alt="">
+                <!-- Product name -->
+                <h5 style="color: black;text-align: center;font-family: Arial, Helvetica, sans-serif;">{{product.name}}</h5>
+                 
+            </a>    
+        </div>
+    </div>
+
+  {% elif loop.index == 273  %}
+       
+   <div class="swiper-slide" style="position: relative;display: flex;align-items: center;justify-content: center;">
+         <div class="box" style="height: 28vh;width: 80%; background:linear-gradient(to left,#DFF5FF, white);border-radius: 13px;position: relative;"> 
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;display: flex;flex-direction: column;align-items: center;">
+                <!-- Background image -->
+                 
+                <!-- Product image -->
+                <img src="{{ product.image }}" class="img-responsive" style="height: 32vh;width: 40%; " alt="">
+                <!-- Product name -->
+                <h5 style="color: black;text-align: center;font-family: Arial, Helvetica, sans-serif;">{{product.name}}</h5>
+                 
+            </a>    
+        </div>
+    </div>
+
+{% elif loop.index == 274  %}
+       
+ <div class="swiper-slide" style="position: relative;display: flex;align-items: center;justify-content: center;">
+          <div class="box" style="height: 28vh;width: 80%; background:linear-gradient(to left,#DFF5FF, white);border-radius: 13px;position: relative;"> 
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;display: flex;flex-direction: column;align-items: center;">
+                <!-- Background image -->
+                 
+                <!-- Product image -->
+                <img src="{{ product.image }}" class="img-responsive" style="height: 32vh;width: 40%; " alt="">
+                <!-- Product name -->
+                <h5 style="color: black;text-align: center;font-family: Arial, Helvetica, sans-serif;">{{product.name}}</h5>
+                 
+            </a>    
+        </div>
+    </div>
+
+    {% elif loop.index == 275  %}
+       
+ <div class="swiper-slide" style="position: relative;display: flex;align-items: center;justify-content: center;">
+          <div class="box" style="height: 28vh;width: 80%; background:linear-gradient(to left,#DFF5FF, white);border-radius: 13px;position: relative;"> 
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;display: flex;flex-direction: column;align-items: center;">
+                <!-- Background image -->
+                 
+                <!-- Product image -->
+                <img src="{{ product.image }}" class="img-responsive" style="height: 32vh;width: 40%; " alt="">
+                <!-- Product name -->
+                <h5 style="color: black;text-align: center;font-family: Arial, Helvetica, sans-serif;">{{product.name}}</h5>
+                 
+            </a>    
+        </div>
+    </div>
+    
+            {% endif %}
+      {% endfor %}
+                    
+    </div>
+     
+  </div>
+ </div>
+
+ <script>
+  var swiper = new Swiper(".blue", {
+     
+    slidesPerView: 3,
+    spaceBetween: 10,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+  });
+</script>
+
+
+<div class="container-fluid small" style="background:linear-gradient(to bottom,skyblue, white);height: 40vh;width: 100%;"> 
+  <div class="row "  >
+    <h4 style="color: black;margin-left: 50px;"><strong>Here New Products!</strong> </h4>
+  </div>
+  <div class="swiper blue "   >
+    <div class="swiper-wrapper"  >
+      
+      {% for product in products %}
+  
+      
+      {% if loop.index == 271  %}
+       
+      <div class="swiper-slide" style="position: relative;display: flex;align-items: center;justify-content: center;">
+        <div class="box" style="height: 28vh;width: 80%; background:linear-gradient(to left,#DFF5FF, white);border-radius: 13px;position: relative;">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;display: flex;flex-direction: column;align-items: center;">
+                <!-- Background image -->
+                 
+                <!-- Product image -->
+                <img src="{{ product.image }}" class="img-responsive" style="height: 32vh;width: 100%; " alt="">
+                <!-- Product name -->
+                <h5 style="color: black;text-align: center;font-family: Arial, Helvetica, sans-serif;">{{product.name}}</h5>
+                 
+            </a>    
+        </div>
+    </div>
+
+    {% elif loop.index == 272  %}
+       
+    <div class="swiper-slide" style="position: relative;display: flex;align-items: center;justify-content: center;">
+          <div class="box" style="height: 28vh;width: 80%; background:linear-gradient(to left,#DFF5FF, white);border-radius: 13px;position: relative;">
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;display: flex;flex-direction: column;align-items: center;">
+                <!-- Background image -->
+                 
+                <!-- Product image -->
+                <img src="{{ product.image }}" class="img-responsive" style="height: 32vh;width: 100%; " alt="">
+                <!-- Product name -->
+                <h5 style="color: black;text-align: center;font-family: Arial, Helvetica, sans-serif;">{{product.name}}</h5>
+                 
+            </a>    
+        </div>
+    </div>
+
+  {% elif loop.index == 273  %}
+       
+   <div class="swiper-slide" style="position: relative;display: flex;align-items: center;justify-content: center;">
+         <div class="box" style="height: 28vh;width: 80%; background:linear-gradient(to left,#DFF5FF, white);border-radius: 13px;position: relative;"> 
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;display: flex;flex-direction: column;align-items: center;">
+                <!-- Background image -->
+                 
+                <!-- Product image -->
+                <img src="{{ product.image }}" class="img-responsive" style="height: 32vh;width: 100%; " alt="">
+                <!-- Product name -->
+                <h5 style="color: black;text-align: center;font-family: Arial, Helvetica, sans-serif;">{{product.name}}</h5>
+                 
+            </a>    
+        </div>
+    </div>
+
+{% elif loop.index == 274  %}
+       
+ <div class="swiper-slide" style="position: relative;display: flex;align-items: center;justify-content: center;">
+          <div class="box" style="height: 28vh;width: 80%; background:linear-gradient(to left,#DFF5FF, white);border-radius: 13px;position: relative;"> 
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;display: flex;flex-direction: column;align-items: center;">
+                <!-- Background image -->
+                 
+                <!-- Product image -->
+                <img src="{{ product.image }}" class="img-responsive" style="height: 32vh;width: 100%; " alt="">
+                <!-- Product name -->
+                <h5 style="color: black;text-align: center;font-family: Arial, Helvetica, sans-serif;">{{product.name}}</h5>
+                 
+            </a>    
+        </div>
+    </div>
+
+    {% elif loop.index == 275  %}
+       
+ <div class="swiper-slide" style="position: relative;display: flex;align-items: center;justify-content: center;">
+          <div class="box" style="height: 28vh;width: 80%; background:linear-gradient(to left,#DFF5FF, white);border-radius: 13px;position: relative;"> 
+          <a href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;display: flex;flex-direction: column;align-items: center;">
+                <!-- Background image -->
+                 
+                <!-- Product image -->
+                <img src="{{ product.image }}" class="img-responsive" style="height: 32vh;width: 100%; " alt="">
+                <!-- Product name -->
+                <h5 style="color: black;text-align: center;font-family: Arial, Helvetica, sans-serif;">{{product.name}}</h5>
+                 
+            </a>    
+        </div>
+    </div>
+    
+            {% endif %}
+      {% endfor %}
+                    
+    </div>
+     
+  </div>
+ </div>
+
+ <script>
+  var swiper = new Swiper(".blue", {
+     
+    slidesPerView: 2,
+    spaceBetween: 10,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+  });
+</script>
+<br><br>
+
+<div class="container-fluid">
+  <div class="row" style="display: flex;align-items: center;justify-content: center;">
+    <h5 style="color: black;"><strong>Fragrance Product Finder  </strong> </h5>
+  </div>
+  <div class="row">
+    <div class="col-xs-4">
+      <a href="/filter_products/floral" style="text-decoration: none;"> 
+      <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Gucci%20Flora%20Gorgeous%20Magnolia%20Eau%20de%20Parfum%20at%20Nordstrom,%20Size%203_3%20Oz.jpeg?updatedAt=1711898929071" class="img-responsive big" style="height: 32vh;width: 60%; " alt="">
+      <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Gucci%20Flora%20Gorgeous%20Magnolia%20Eau%20de%20Parfum%20at%20Nordstrom,%20Size%203_3%20Oz.jpeg?updatedAt=1711898929071" class="img-responsive small" style="height: 22vh;width: 100%; " alt="">
+      <h5 style="color: black;"><strong>Floral  </strong> </h5>
+      <h6 style="color: black;"><strong>From RS.700  </strong> </h6></a>
+    </div>
+    <div class="col-xs-4">
+      <a  href="/filter_speci/Oriental Perfume" style="text-decoration: none;"> 
+      <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Baccara%20vanille%20(1).jpeg?updatedAt=1711898929022" class="img-responsive big" style="height: 32vh;width: 60%; " alt="">
+      <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Baccara%20vanille%20(1).jpeg?updatedAt=1711898929022" class="img-responsive small" style="height: 22vh;width: 100%; " alt="">
+      <h5 style="color: black;"><strong>Oriental </strong> </h5>
+      <h6 style="color: black;"><strong>From RS.600  </strong> </h6></a>
+    </div>
+    <div class="col-xs-4">
+      <a  href="/filter_speci/woody" style="text-decoration: none;"> 
+      <img src="https://ik.imagekit.io/indueo3hy/cosmotics/14%20Best%20Woody%20Fragrances%20for%20Men%20_%20Man%20of%20Many.jpeg?updatedAt=1711898928168" class="img-responsive big" style="height: 32vh;width: 60%; " alt="">
+      <img src="https://ik.imagekit.io/indueo3hy/cosmotics/14%20Best%20Woody%20Fragrances%20for%20Men%20_%20Man%20of%20Many.jpeg?updatedAt=1711898928168" class="img-responsive small" style="height: 22vh;width: 100%; " alt="">
+      <h5 style="color: black;"><strong>Woody </strong> </h5>
+      <h6 style="color: black;"><strong>From RS.700  </strong> </h6></a>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container-fluid"  style="background-color:  #344955;">
+  <h2 style="color: #FFC94A;"><strong>Premium Selects</strong> </h2>
+</div>
+  <div class="swiper big"   style="height: 50vh;width: 100%;background-color: #344955;">
+   
+  <div class="swiper-wrapper"  >
+    <div class="swiper-slide" style="display: flex;align-items: center;justify-content: center;">
+      <div class="box" style="width: 70%;height: 46vh; ">
+        <div class="box1" style="width: 70%;height: 42vh; background-color: #A64B2A;display: flex;align-items: center;justify-content: center; ">
+          <a href="/filter_products/Loreal" style="text-decoration: none;display: flex; align-items: center; justify-content: center; flex-direction: column;"> 
+            <img src="https://ik.imagekit.io/indueo3hy/cosmotics/download.jpeg?updatedAt=1712078936945" style="height:8vh;width:50%; " class="img-responsive"  alt="">
+            <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Fine_hair__we_re_finished_-removebg-preview.png?updatedAt=1712079675291" class="img-responsive" style="height:30vh;width:100%" alt="">           
+            
+          </a>
+        </div>
+        <div class="box2" style="width: 70%;height: 4vh; background-color: white;display: flex;align-items: center;justify-content: center;">
+          <h5 style="color: black;text-align: center;">   Up to 20% Off </h5> 
+        </div>
+      </div>
+    </div>
+
+    
+  
+
+    <div class="swiper-slide" style="display: flex;align-items: center;justify-content: center;">
+      <div class="box" style="width: 70%;height: 46vh; ">
+        <div class="box1" style="width: 70%;height: 42vh; background-color: #A64B2A; display: flex;align-items: center;justify-content: center;">
+          <a href="/filter_products/Cetaphil" style="text-decoration: none;display: flex; align-items: center; justify-content: center; flex-direction: column;"> 
+            <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Face___Body_Cleaner-removebg-preview.png?updatedAt=1712080012093" style="height:8vh;width:60%" class="img-responsive"  alt="">
+            <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Cetaphil_Total_Skincare_Routine_for_Dry_Sensitive_Skin-removebg-preview.png?updatedAt=1712080012213" class="img-responsive" style="height:30vh;width:100%" alt="">           
+            
+          </a>
+        </div>
+        <div class="box2" style="width: 70%;height: 4vh; background-color: white;display: flex;align-items: center;justify-content: center;">
+          <h5 style="color: black;text-align: center;">   Up to 20% Off </h5> 
+        </div>
+      </div>
+    </div>
+    
+     
+    <div class="swiper-slide" style="display: flex;align-items: center;justify-content: center;">
+      <div class="box" style="width: 70%;height: 46vh  ">
+        <div class="box1" style="width: 70%; height: 42vh; background-color: #A64B2A; display: flex;align-items: center;justify-content: center;">
+          <a href="/filter_products/jaguar" style="text-decoration: none;display: flex; align-items: center; justify-content: center; flex-direction: column;"> 
+             
+             <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Jaguar_Font_and_Jaguar_Logo-removebg-preview.png?updatedAt=1712112762558" style="height:16vh;width:50%" class="img-responsive"  alt=""> 
+            <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Jaguar_Pace_Eau_de_Toilette_Spray_for_Men__3_4_Ounce-removebg-preview.png?updatedAt=1712112532252" class="img-responsive" style="height:30vh;width:100%" alt="">           
+            
+          </a>
+        </div>
+        <div class="box2" style="width: 70%; height: 4vh;border-radius:0 0 0 0;background-color: white;display: flex;align-items: center;justify-content: center;">
+          <h5 style="color: black;text-align: center;">   Up to 30% Off</h5> 
+        </div>
+      </div>
+    </div>
+
+    <div class="swiper-slide" style="display: flex;align-items: center;justify-content: center;">
+      <div class="box" style="width: 70%;height: 46vh; ">
+        <div class="box1" style="width: 70%;height: 42vh;background-color: #A64B2A; display: flex;align-items: center;justify-content: center;">
+          <a href="/filter_products/guess" style="text-decoration: none;display: flex; align-items: center; justify-content: center; flex-direction: column;"> 
+             <h4 style="color: white;">GUESS</h4>
+             <!--<img src="https://ik.imagekit.io/indueo3hy/cosmotics/Jaguar_Font_and_Jaguar_Logo-removebg-preview.png?updatedAt=1712112762558" style="height:8vh;width:40%" class="img-responsive"  alt=""> -->
+            <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Damenparf%C3%BCm_Guess_EDT_Seductive_Kiss_75_ml__75_ml_-removebg-preview.png?updatedAt=1712113166977" class="img-responsive" style="height:30vh;width:100%" alt="">           
+            
+          </a>
+        </div>
+        <div class="box2" style="width: 70%;height: 4vh; background-color: white;display: flex;align-items: center;justify-content: center;">
+          <h5 style="color: black;text-align: center;">    Up to 50% Off</h5> 
+        </div>
+      </div>
+    </div>
+
+
+     
+    
+  </div>
+ </div>
+
+  
+<script>
+  var swiper = new Swiper(".big", {
+    slidesPerView: 3,
+    spaceBetween: 20,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+  });
+</script>
+
+
+
+
+<div class="swiper small"   style="height: 50vh;width: 100%;background-color: #344955;">
+   
+  <div class="swiper-wrapper" style="margin-left: 20px;" >
+    <div class="swiper-slide" style="display: flex;align-items: center;justify-content: center;">
+      <div class="box" style="width: 100%;height: 46vh; ">
+        <div class="box1" style="width: 100%;height: 42vh; background-color: #A64B2A;display: flex;align-items: center;justify-content: center; ">
+          <a href="/filter_products/Loreal" style="text-decoration: none;display: flex; align-items: center; justify-content: center; flex-direction: column;"> 
+            <img src="https://ik.imagekit.io/indueo3hy/cosmotics/download.jpeg?updatedAt=1712078936945" style="height:8vh;width:50%; " class="img-responsive"  alt="">
+            <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Fine_hair__we_re_finished_-removebg-preview.png?updatedAt=1712079675291" class="img-responsive" style="height:30vh;width:100%" alt="">           
+            
+          </a>
+        </div>
+        <div class="box2" style="width: 100%;height: 4vh; background-color: white;display: flex;align-items: center;justify-content: center;">
+          <h5 style="color: black;text-align: center;"> <strong>Up to 20% Off</strong>    </h5> 
+        </div>
+      </div>
+    </div>
+
+    
+  
+
+    <div class="swiper-slide" style="display: flex;align-items: center;justify-content: center;">
+      <div class="box" style="width: 100%;height: 46vh; ">
+        <div class="box1" style="width: 100%;height: 42vh; background-color: #A64B2A; display: flex;align-items: center;justify-content: center;">
+          <a href="/filter_products/Cetaphil" style="text-decoration: none;display: flex; align-items: center; justify-content: center; flex-direction: column;"> 
+            <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Face___Body_Cleaner-removebg-preview.png?updatedAt=1712080012093" style="height:8vh;width:60%" class="img-responsive"  alt="">
+            <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Cetaphil_Total_Skincare_Routine_for_Dry_Sensitive_Skin-removebg-preview.png?updatedAt=1712080012213" class="img-responsive" style="height:30vh;width:100%" alt="">           
+            
+          </a>
+        </div>
+        <div class="box2" style="width: 100%;height: 4vh; background-color: white;display: flex;align-items: center;justify-content: center;">
+          <h5 style="color: black;text-align: center;">    <strong>Up to 20% Off</strong> </h5> 
+        </div>
+      </div>
+    </div>
+    
+     
+    <div class="swiper-slide" style="display: flex;align-items: center;justify-content: center;">
+      <div class="box" style="width: 100%;height: 46vh  ">
+        <div class="box1" style="width: 100%; height: 42vh; background-color: #A64B2A; display: flex;align-items: center;justify-content: center;">
+          <a href="/filter_products/jaguar" style="text-decoration: none;display: flex; align-items: center; justify-content: center; flex-direction: column;"> 
+             
+             <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Jaguar_Font_and_Jaguar_Logo-removebg-preview.png?updatedAt=1712112762558" style="height:16vh;width:50%" class="img-responsive"  alt=""> 
+            <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Jaguar_Pace_Eau_de_Toilette_Spray_for_Men__3_4_Ounce-removebg-preview.png?updatedAt=1712112532252" class="img-responsive" style="height:30vh;width:100%" alt="">           
+            
+          </a>
+        </div>
+        <div class="box2" style="width: 100%; height: 4vh;border-radius:0 0 0 0;background-color: white;display: flex;align-items: center;justify-content: center;">
+          <h5 style="color: black;text-align: center;"> <strong>Up to 30% Off</strong>  </h5> 
+        </div>
+      </div>
+    </div>
+
+    <div class="swiper-slide" style="display: flex;align-items: center;justify-content: center;">
+      <div class="box" style="width: 100%;height: 46vh; ">
+        <div class="box1" style="width: 100%;height: 42vh;background-color: #A64B2A; display: flex;align-items: center;justify-content: center;">
+          <a href="/filter_products/guess" style="text-decoration: none;display: flex; align-items: center; justify-content: center; flex-direction: column;"> 
+             <h4 style="color: white;">GUESS</h4>
+             <!--<img src="https://ik.imagekit.io/indueo3hy/cosmotics/Jaguar_Font_and_Jaguar_Logo-removebg-preview.png?updatedAt=1712112762558" style="height:8vh;width:40%" class="img-responsive"  alt=""> -->
+            <img src="https://ik.imagekit.io/indueo3hy/cosmotics/Damenparf%C3%BCm_Guess_EDT_Seductive_Kiss_75_ml__75_ml_-removebg-preview.png?updatedAt=1712113166977" class="img-responsive" style="height:30vh;width:100%" alt="">           
+            
+          </a>
+        </div>
+        <div class="box2" style="width: 100%;height: 4vh; background-color: white;display: flex;align-items: center;justify-content: center;">
+          <h5 style="color: black;text-align: center;">    <strong>Up to 50% Off</strong> </h5> 
+        </div>
+      </div>
+    </div>
+
+
+     
+    
+  </div>
+ </div>
+
+
+ <script>
+  var swiper = new Swiper(".small", {
+    slidesPerView: 2,
+    spaceBetween: 50,
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+  });
+</script>
+
+ 
+ 
+    <script>
+  
+      function handleSearchRedirect() {
+          var screenWidth = window.innerWidth;
+          var searchLink = document.getElementById('searchLink');
+          if (screenWidth < 768) { // For small screens
+              searchForm.removeAttribute('action');
+              searchLink.setAttribute('href', "{{ url_for('searchbar') }}");
+          } else { // For larger screens
+              searchLink.removeAttribute('href');
+          }
+      }
+  
+      // Run the function on page load and window resize
+      document.addEventListener('DOMContentLoaded', handleSearchRedirect);
+      window.addEventListener('resize', handleSearchRedirect);
+   
+  
+  </script>
+  
+  <script>
+    // Function to handle form submission
+    function validateSearchForm(event) {
+        var searchInput = document.getElementById('searchInput');
+        
+        // Check if the input field is empty
+        if (searchInput.value.trim() === '') {
+            event.preventDefault(); // Prevent form submission if input is empty
+        }
+    }
+  
+    // Add event listener to the form for form submission validation
+    document.getElementById('searchForm').addEventListener('submit', validateSearchForm);
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+ 
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.min.js.js"></script>
+</body>
+</html>

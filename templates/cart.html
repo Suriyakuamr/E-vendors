@@ -1,0 +1,311 @@
+ 
+<!--final-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>  
+    <!--<link rel="stylesheet" href="css/bootstrap.min.css">-->
+    <title>E-vendors/Cart</title>
+    <style>
+	body{
+	overflow-x: hidden;
+	 
+         
+    }
+    .quantity-input {
+            width: 40px;
+            text-align: center;
+        }
+
+        .total {
+            font-weight: bold;
+        }
+
+        .big
+        {
+            display: block;
+        }        
+        .small
+        {
+            display: none;
+        }
+    @media only screen and (min-width:700px) {
+         
+        .big
+        {
+            display: none;
+        }        
+        .small
+        {
+            display: block;
+        }
+    }
+     
+    </style>
+</head>
+<body style="background-color: rgb(255, 255, 255);">
+     
+	
+	
+	 
+	 
+             
+          <div class="container"  >
+            <h4 style="color: black;">My Cart</h4>
+			  <div class="row">
+			   <div class="col-md-12" style=" display: flex;align-items: center;justify-content: center;">
+                <div class="box" style="background-color: rgb(255, 255, 255);width: 100%;height: 12vh;display: flex;align-items: center;justify-content: space-around;">
+                <h5 style="text-decoration: none; ">Deleiver to: <strong>{{existing_delivery_address.district}}-{{existing_delivery_address.pincode}} </strong>  </h5>
+                
+			    <a href="{{ url_for('delivery_address') }}"   class="btn " style="border: 0.02px solid black;"  >change</a>
+			    
+			   </div>
+               </div>
+					 
+		      </div>
+		  </div>
+		  
+		 
+
+		 
+
+  
+ 
+<form method="post" action="{{ url_for('place_order') }}">
+    {% for cart_item in cart_items %}
+        <div class="container" style="  padding:20px;margin:10px;">
+            <label >select the item:  </label><input type="checkbox" style="margin-left: 5px;" name="selected_products" value="{{ cart_item.product.id }}"> 
+            <div class="row">
+                <div class="col-sm-5">
+                    
+                    <a href="{{ url_for('product_details', product_id=cart_item.product.id) }}" style="text-decoration: none;">
+                        <img class="big" style="width: 100%;height: 45vh;padding: 10px;" src="{{ cart_item.product.image }}" alt="{{ cart_item.product.name }}">
+                        <img class="small" style="width: 60%;height: 48vh;padding: 10px;" src="{{ cart_item.product.image }}" alt="{{ cart_item.product.name }}">
+                    </a>
+                    
+                     
+                </div>
+            </div>
+                <div class="row">
+                    <div class="update-quantity-form" style="padding: 30px;display:flex;align-items: center;">
+                       
+                        <input class="form-control" style=" width: 30%;background-color: white;color: black;border-radius: 30px;" type="number" name="quantity_{{ cart_item.product.id }}" value="{{ cart_item.quantity }}" min="1" data-product-id="{{ cart_item.product.id }}">
+						
+                        <button class="btn " type="submit" formaction="{{ url_for('update_quantity', product_id=cart_item.product_id) }}" style="margin-left: 10px; border-radius: 30px;background-color: rgb(0, 0, 0);color: rgb(255, 255, 255);">Update Quantity</button>
+                    </div>
+                     
+                </div>
+                 
+
+                <div class="row small">
+                    <div class="total" style="display:flex;align-items: center;justify-content: center;margin-left: 100px;" data-product-id="{{ cart_item.product.id }}">
+                        <h4  style="color: black;"> Total:   RS.{{ cart_item.quantity * cart_item.product.price }}</h4>
+                      </div>
+               
+                       
+                </div>
+                
+                <div class="col-sm-7" >
+                    <h4>  {{ cart_item.product.name }}</h4>
+                    <div class="box" style="display:flex;align-items:center;justify-content:space-between;">
+                    <div class="price" data-product-id="{{ cart_item.product.id }}" data-original-price="{{ cart_item.product.price }}">
+                        <h4> RS.{{ cart_item.product.price }}</h4>
+                    </div>
+                     
+                     
+                        <div class="col-sm-6"  > 
+                            
+                            <span class="btn  " style="border-radius: 30px;color: black;border: 0.001px solid black" onclick="deleteProduct({{ cart_item.product.id }})">    Remove     </span>
+                        </div>
+                     
+                    </div>
+                </div>
+
+                <div class="row big">
+                    <div class="total" style="display:flex;align-items: center;justify-content: center;" data-product-id="{{ cart_item.product.id }}">
+                        <h4  style="color: black;"> Total:   RS.{{ cart_item.quantity * cart_item.product.price }}</h4>
+                      </div>
+               
+                       
+                </div>
+                 
+            
+        </div>
+        
+    {% endfor %}
+    
+
+        <div class="container-fluid fixed-bottom" style="margin-top: 100px;margin-bottom: 0px;background-color: rgb(238, 238, 248);">
+            <div class="row">
+                <div class="col-6" style="display: flex; align-items: center; justify-content: center;">
+                    <div class="box" style="width: 50%; height: 10vh;">
+                        <h4   style="width: 100%; height: 100%;text-align: center;">Total: RS.<span id="total">{{ total_price }}</span></h4>
+                    </div>
+                </div>
+                <div class="col-6" style="display: flex; align-items: center; justify-content: center;">
+                    <div class="box small" style="width: 50%; height: 12vh;">
+                        <button type="submit" style="background-color: black; color: white;margin-top: 5px; width: 100%; height: 90%;" class="btn">Place Order</button>
+                    </div>
+                    <div class="box big" style="width: 100%; height: 10vh;">
+                        <button type="submit" style="background-color: black; color: white;margin-top: 5px; width: 100%; height: 90%;" class="btn">Place Order</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        
+         
+
+</form> 
+
+ 
+ 
+ 
+
+ 
+ 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI/t1u1d764l38aYGRe6l8w2Y4CmkXpS6EEN5/sA=" crossorigin="anonymous"></script>
+
+
+
+<script>
+    function deleteProduct(product_id) {
+        // Make an AJAX request to your Flask route to delete the product
+        $.ajax({
+            url: '/delete_product/' + product_id,
+            type: 'DELETE',
+            success: function(response) {
+                // Handle success, update the UI if needed
+                console.log(response);
+                // Refresh the page or update the UI accordingly
+                location.reload(); // Refresh the page after successful deletion
+            },
+            error: function(error) {
+                // Handle error
+                console.error(error);
+            }
+        });
+    }
+</script>
+
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+        // Handle form submissions
+        $('.update-quantity-form').submit(function (event) {
+            event.preventDefault();
+            var form = $(this);
+            var productId = form.find('[name="quantity"]').data('product-id');
+            var quantity = form.find('[name="quantity"]').val();
+
+            // Send AJAX request to update quantity
+            $.post(form.attr('action'), { quantity: quantity }, function () {
+                // Update quantity in the displayed cart
+                $('#quantity-display-' + productId).text(quantity);
+            });
+        });
+    });
+</script>
+ 	  
+        
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Update total price when quantity changes
+            var quantityButtons = document.querySelectorAll('.quantity-button');
+            quantityButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    updateQuantity(this);
+                });
+            });
+        });
+
+          /*function deleteProduct(productId) {
+            var deleteUrl = "/delete_product/" + productId;
+            window.location.href = deleteUrl;
+            }
+
+                function onSubmitPlaceOrder() {
+    alert("Form submitted!");
+    return false;  
+             }  
+			
+		   */
+		 
+
+
+ 
+
+    function placeOrder() {
+        // Collect updated quantities and prices and submit the form
+        var form = document.getElementById('orderForm');
+        form.submit();
+    }
+	
+	
+	
+	  
+ function updateQuantity(button) {
+    var productId = button.dataset.productId;
+    var increment = parseInt(button.dataset.increment);
+    var quantityElement = document.querySelector('.quantity[data-product-id="' + productId + '"]');
+    var currentQuantity = parseInt(quantityElement.textContent);
+    var newQuantity = currentQuantity + increment;
+
+    if (newQuantity >= 1) {
+        quantityElement.textContent = newQuantity;
+        updateTotalPrice(productId);
+
+        // Update the hidden input value
+        var hiddenInput = document.querySelector('input[name="quantity_' + productId + '"]');
+        hiddenInput.value = newQuantity;
+    }
+}
+
+
+
+
+
+function updateTotalPrice(productId) {
+    var quantity = parseInt(document.querySelector('.quantity[data-product-id="' + productId + '"]').textContent);
+    var originalPrice = parseFloat(document.querySelector('.price[data-product-id="' + productId + '"]').dataset.originalPrice);
+    var total = quantity * originalPrice;
+    document.querySelector('.total[data-product-id="' + productId + '"]').textContent = '$' + total.toFixed(0);
+
+    // Recalculate total price
+    var totalElements = document.querySelectorAll('.total');
+    var totalPrice = 0;
+    totalElements.forEach(function (element) {
+        totalPrice += parseFloat(element.textContent.replace('$', ''));
+    });
+    document.getElementById('total').textContent = totalPrice.toFixed(0);
+}
+
+		               
+    </script>
+	<!--<script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.min.js.js"></script>-->
+</body>
+</html>
+
+
+
+
+
+
+ 

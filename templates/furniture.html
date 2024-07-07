@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Vendors/Furnitures</title>
+    <script src="https://unpkg.com/swiper@6.8.4/swiper-bundle.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/swiper@6.8.4/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/mobiles.css">
+    <style>
+      .lar
+      {
+        display: block;
+      }
+      .min
+      {
+        display: none;
+      }
+      @media only screen and (max-width: 768px) {
+        .lar
+      {
+        display: none;
+      }
+      .min
+      {
+        display: block;
+      }
+      }
+    </style>
+</head>
+
+<body>
+   <!--nav-->
+  <nav class="navbar   navbar-default   navbar-fixed-top" id="topnav" style=" background:white">
+    <div class="container-fluid" style="margin-top: 10px;display: flex;align-items: center;justify-content: center;">
+       <div class="row">
+
+      <!--title-->
+      <div class="col-xs-3 title">
+         <h4 style="color: black; font-family: Sacramento, cursive;margin-top: 15px;">  Furnitures </h4> 
+      </div>
+
+      <div class="col-xs-2 b-title">
+         <h3 style="color: black; font-family: Sacramento, cursive;margin-top: 15px;">   Furnitures  </h3>
+     </div>
+
+       
+     <!--search bar FOR BIG SCREEN-->
+<div class="col-xs-4  big">
+<a id="searchLink" href="{{ url_for('searchbar') }}" style="text-decoration: none;">
+    <form class="navbar-form navbar-left search" action="{{ url_for('search') }}" id="searchForm" method="GET" >
+        <div class="input-group  big">
+          <input id="searchInput" type="text" class="form-control" placeholder="Search For products,Brands and More" name="search">
+             <div class="input-group-btn">
+                <button id="searchButton" class="btn btn-default" type="submit">
+                    <i class="glyphicon glyphicon-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</a>
+</div>
+
+
+<!--CART-->
+     <div class="col-xs-3">        
+        <a href="{{ url_for('cart') }}" style="display: flex; align-items: center; justify-content: space-around;" class="navbar-brand cart" id="my">
+          <span id="cart-icon" class="glyphicon glyphicon-shopping-cart"  style="color: black;margin-bottom: 8px;"></span>
+          <h4 id="cart-text" style="color: black;margin-left: 5px;   ">Cart</h4>
+      </a>
+     </div>
+
+      <!--accout-->
+      
+  <div class="col-xs-3"   >
+  
+   {% if current_user.is_authenticated %}
+   
+ 
+ <div class="dropdown">
+  
+  <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+  style="background-color:rgb(255, 255, 255); color:rgb(0, 0, 0);margin-left: 2px;">
+<h5>
+  <span class="glyphicon glyphicon-user" style="display: inline-block; color:black;">Account</span>
+  <span class="caret"></span>
+</h5>  
+</button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <ul class="list-unstyled" style="text-align: center;">
+      <li>
+         <a href="{{ url_for('profile', user_id=current_user.id) }}">
+    <h5 style="display: block;color: black;">  <span class="glyphicon glyphicon-user" style="display: inline-block;color:black;"> My Profile</h5></span></a></li>
+      <li><a class="dropdown-item" href="{{ url_for('logout') }}"><h5 style="color: black;"> Logout <span class="glyphicon glyphicon-log-out"></span> </h5> </a></li>
+      <li><a class="dropdown-item" href="{{ url_for('dashboard') }}"><h5 style="color: black;"> Orders</h5></a></li>
+    </ul>
+  </div>
+</div>
+
+
+{% else %}
+ 
+<a  href="{{ url_for('login') }}" style="display: flex; align-items: center; justify-content: space-around;" class="navbar-brand cart" id="my">
+<span style="display: inline-block; color:black;margin-bottom: 8px;"  class="glyphicon glyphicon-log-in"></span>
+<h5 id="cart-text" style="color: black;margin-left: 5px;   ">LOGIN</h5>
+</a>
+  
+{% endif %}
+</div>
+ 
+     
+
+      
+<!--2 nd for search bar small screen-->
+       
+<div class="col-xs-3 sear">
+  <a id="searchLink" href="{{ url_for('searchbar') }}" style="text-decoration: none;">
+     
+            <div class="input-group-btn">
+              <button id="searchButton" class="btn btn-default " type="submit" style=" font-size: 20px;border: none;margin-top: 10px;">
+                     
+                <span class="glyphicon glyphicon-search"></span>
+            </button>
+            </div>
+         
+</a>
+ </div>
+       
+
+    </div>    
+   
+    </div>
+</nav>
+
+
+  <!--slide 1-->
+   <div class="container"  style="margin-top: 100px;">
+     
+  
+    <div class="row"   > 
+        <div class="swiper-container"  >
+            <div class="swiper-wrapper">
+                 
+                <!--<div class="swiper-slide" style="position: relative; width: 100%; height: 50vh;  ">
+                  <a href="/filter_products/Mattress" style="text-decoration: none;display: flex; justify-content: center; align-items: center;">
+                 
+                  <img src="https://ik.imagekit.io/pve74zqrg/furn/beds.jpg?updatedAt=1710396844209" alt=" " class="  img-responsive"   style="height:52vh;width: 80%; ">
+                  <div style="position: absolute; top: 70%; right: 30%; transform: translate(-50%, -50%); text-align: center;">
+                    <h4 style="color:red; "> <strong>duroflex</strong></h4>
+                     <h6 style="color:rgb(22, 22, 22); "> <strong>Premium Memory Foam <br>Matttresses</strong></h6>
+                     <h4 style="color:rgb(22, 22, 22); "><strong>Up to 45% Off</strong></h4>
+                  </div>
+                  </a>
+                
+               </div>-->
+ 
+              <div class="swiper-slide" style="position: relative; width: 100%; height: 50vh;  ">
+                <a href="/filter_products/tv unit" style="text-decoration: none;display: flex; justify-content: center; align-items: center;">
+                <img src="https://ik.imagekit.io/pve74zqrg/furn/tv%20units.jpg?updatedAt=1710394400928" alt="Chicago" class="img-responsive" style="height: 52vh; width: 80%;">
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                    <h5 style="color:rgb(241, 236, 236);"><strong>Explore Our <br> Furniture Range</strong></h5>
+                    <button type="button" class="btn btn-responsive" style="background-color: rgb(255, 255, 255); width: 106px; height: 22px;display: flex; justify-content: center; align-items: center;"><strong>Up To 60% Off</strong></button>
+                
+                </div>
+                </a>
+            </div>
+            
+            <div class="swiper-slide" style="position: relative; width: 100%; height: 50vh;  ">
+              <a href="/filter_products/sofa" style="text-decoration: none;display: flex; justify-content: center; align-items: center;">
+                <img src="https://ik.imagekit.io/pve74zqrg/furn/sofa.jpg?updatedAt=1710394429636" alt="New York" class="  img-responsive"  style="height:52vh;width:80%;">
+                <div style="position: absolute; top: 80%; right: 30%; transform: translate(-50%, -50%); text-align: center;">
+                <h5 style="color:rgb(241, 236, 236);  "> <strong>  Recliners  <br> Fabric & Leatherette</strong></h5>
+                <button  type="button" class="btn btn-responsive" style="   background-color:  rgb(250, 240, 242); width: 126px;height: 28px;display:flex;justify-content:center;  align-items: center; "  ><h5 style="color: rgb(25, 25, 26);">From RS.10,500 <span class="glyphicon glyphicon-chevron-right"></span>   </h5> </button>
+              </div>
+            </a>
+              </div>
+
+              <div class="swiper-slide" style="position: relative; width: 100%; height: 50vh;  ">
+                <a href="/filter_products/wardrobe" style="text-decoration: none;display: flex; justify-content: center; align-items: center;">
+                <img src="https://ik.imagekit.io/pve74zqrg/furn/wardrobes.jpg?updatedAt=1710394401060" alt="New York" class="  img-responsive" style="height:52vh;width: 80%;" >
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                <h5 style="color:rgb(241, 236, 236); "> <strong>   3-doors <br> Wardrobes</strong></h5>
+                <button  type="button" class="btn btn-responsive" style="  background-color:  rgb(250, 240, 242);width: 126px;height: 24px;display:flex;justify-content:center;  align-items: center; "  ><h5 style="color: rgb(25, 25, 26);">From RS.9990 <span class="glyphicon glyphicon-chevron-right"></span>   </h5> </button>
+                </div>
+                </a>
+              </div>
+
+              
+
+
+            </div>
+        </div>
+    </div>
+  </div> 
+
+    
+ <br>
+<!--3 IMAGES (1)-->
+<div class="container-fluid  " >
+  <div class="row">
+     
+
+     
+    <div class="col-xs-4">
+       
+      <a href="/filter_arguments/tv units/sofa/book shelfs" style="text-decoration: none;">
+        <img src="https://ik.imagekit.io/pve74zqrg/furn/living%20room.jpg?updatedAt=1710394384403" class="  img-responsive lar" style="height: 28vh;width: 65%;border-radius: 6px " >
+        <img src="https://ik.imagekit.io/pve74zqrg/furn/living%20room.jpg?updatedAt=1710394384403" class="  img-responsive min" alt="" style="height: 18vh;width: 100%;border-radius: 6px " >
+        <h6 class="pro-title" style="color: black;"><strong>Living Room</strong> </h6>
+           <span class="glyphicon glyphicon-chevron-right text-center" style=
+          "background-color: rgb(2, 2, 2);color: antiquewhite;  border-radius: 50%;width: 20px;height: 20px;display: flex;align-items: center; justify-content: center; "></span>   </a>
+        
+    </div>
+     
+      <div class="col-xs-4">
+        <a href="/filter_arguments/beds/Mattress/wardrobes" style="text-decoration: none;">
+        
+       <img src="https://ik.imagekit.io/pve74zqrg/furn/bed%20room.jpg?updatedAt=1710394359719" class="  img-responsive lar" alt="" style="height: 28vh;width: 65%;border-radius: 6px " >
+       <img src="https://ik.imagekit.io/pve74zqrg/furn/bed%20room.jpg?updatedAt=1710394359719" class="  img-responsive min" alt="" style="height: 18vh;width: 100%;border-radius: 6px " >
+       <h6 style="font-weight: 0.5px; display: flex;justify-content: space-between;color: black;"> Bedroom</h6>  
+          <span 
+        class="glyphicon glyphicon-chevron-right" style="background-color: rgb(5, 5, 5);color: antiquewhite;  border-radius: 50%;width: 20px;height: 20px;display: flex;
+        align-items: center; justify-content: center; "></span>  </a>
+      </div>
+       
+      
+    <div class="col-xs-4">
+      <a href="/filter_arguments/tv units/sofa/book shelfs" style="text-decoration: none;">
+        <img src="https://ik.imagekit.io/pve74zqrg/furn/space%20saving.jpg?updatedAt=1710394386496" class="lar  img-responsive" alt="" style="height: 28vh;width: 65%;border-radius: 6px " >
+        <img src="https://ik.imagekit.io/pve74zqrg/furn/space%20saving.jpg?updatedAt=1710394386496" class="min  img-responsive" alt="" style="height: 18vh;width: 100%;border-radius: 6px " >
+       <h6 style="font-weight: 0.1px; color: black; ">  Space Saving  </h6> 
+          <span 
+        class="glyphicon glyphicon-chevron-right" style=" background-color: rgb(8, 8, 8);color: rgb(248, 244, 244);  border-radius: 50%;width: 20px;height: 20px;display: flex;
+        align-items: center; justify-content: center; "></span>  </a>
+    </div>
+  </div>
+</div>
+ 
+
+<!--FRAME3 images=8 non colour-->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12">
+      <h4 class="text-center" style="color: black;">Sales Marching Your Way</h4>  
+      <h6 class="text-center" style="color: black;">Pick the Best</h6>
+    </div>
+    {% for product in products %}
+    {% if loop.index ==30   %}
+    <div class="col-xs-4">
+      <a  href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">  
+        <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive lar" alt="" style="height: 27vh;width: 70%; border-radius: 6px" >
+        <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive min" alt="" style="height: 20vh;width: 100%; border-radius: 6px" >
+      <p style=" color: black;">{{product.name}}</p>
+        <h5 style="color: rgb(74, 235, 74)">From ₹{{product.price}}</h5></a>
+    </div>
+     
+
+    {% elif loop.index ==31   %}
+    <div class="col-xs-4">
+      <a  href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">  
+        <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive lar" alt="" style="height: 27vh;width: 70%; border-radius: 6px" >
+        <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive min" alt="" style="height: 20vh;width: 100%; border-radius: 6px" >
+      <p style=" color: black;">{{product.name}}</p>
+        <h5 style="color: rgb(74, 235, 74)">From ₹{{product.price}}</h5></a>
+    </div>
+      
+
+    {% elif loop.index ==32   %}
+    <div class="col-xs-4">
+      <a  href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">  
+        <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive lar" alt="" style="height: 27vh;width: 70%; border-radius: 6px" >
+        <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive min" alt="" style="height: 20vh;width: 100%; border-radius: 6px" >
+      <p style=" color: black;">{{product.name}}</p>
+        <h5 style="color: rgb(74, 235, 74)">From ₹{{product.price}}</h5></a>
+    </div>
+  </div>
+    <br>
+
+  <div class="row"> 
+    {% elif loop.index ==33  %}
+  <div class="col-xs-4">
+    <a  href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">  
+      <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive lar" alt="" style="height: 27vh;width: 70%; border-radius: 6px" >
+      <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive min" alt="" style="height: 20vh;width: 100%; border-radius: 6px" >
+    <p style=" color: black;">{{product.name}}</p>
+      <h5 style="color: rgb(74, 235, 74)">From ₹{{product.price}}</h5></a>
+  </div>
+  {% elif loop.index ==34   %}
+  <div class="col-xs-4">
+    <a  href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">  
+      <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive lar" alt="" style="height: 27vh;width: 70%; border-radius: 6px" >
+      <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive min" alt="" style="height: 20vh;width: 100%; border-radius: 6px" >
+    <p style=" color: black;">{{product.name}}</p>
+      <h5 style="color: rgb(74, 235, 74)">From ₹{{product.price}}</h5></a>
+  </div>
+  {% elif loop.index ==35   %}
+  <div class="col-xs-4">
+    <a  href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">  
+      <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive lar" alt="" style="height: 27vh;width: 70%; border-radius: 6px" >
+      <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive min" alt="" style="height: 20vh;width: 100%; border-radius: 6px" >
+    <p style=" color: black;">{{product.name}}</p>
+      <h5 style="color: rgb(74, 235, 74)">From ₹{{product.price}}</h5></a>
+  </div>
+  </div>
+   
+
+<div class="row"> 
+  {% elif loop.index ==36   %}
+<div class="col-xs-4">
+  <a  href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">  
+    <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive lar" alt="" style="height: 27vh;width: 70%; border-radius: 6px" >
+    <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive min" alt="" style="height: 20vh;width: 100%; border-radius: 6px" >
+  <p style=" color: black;">{{product.name}}</p>
+    <h5 style="color: rgb(74, 235, 74)">From ₹{{product.price}}</h5></a>
+</div>
+{% elif loop.index ==37   %}
+<div class="col-xs-4">
+  <a  href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">  
+    <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive lar" alt="" style="height: 27vh;width: 70%; border-radius: 6px" >
+    <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive min" alt="" style="height: 20vh;width: 100%; border-radius: 6px" >
+  <p style=" color: black;">{{product.name}}</p>
+    <h5 style="color: rgb(74, 235, 74)">From ₹{{product.price}}</h5></a>
+</div>
+{% endif %}
+     {% endfor %}
+
+<div class="col-xs-4">
+   
+  <a href="/filter_arguments/beds/Mattress/wardrobes" style="text-decoration: none;">  <h5 style=" display: flex;align-items: center;justify-content: center;
+ border-radius: 50%;width: 79px;height: 79px; background: linear-gradient(to top, rgb(57, 240, 50), rgb(123, 240, 132));color:  rgb(255, 255, 255);">  <Strong>View All</Strong></h5></a>
+
+</div>
+
+  </div>
+</div>
+<br>
+
+
+ 
+
+<!--IMMAGE1 (2)-->
+    <div class="container-fluid "  >
+      <div class="row"  >
+        
+        <div class="col-xs-12" style="background-color: white;height: 8vh;width: 100%; ">
+          <h5 style="display: flex;align-items: center;justify-content:space-between;color: rgb(38, 14, 173);position: absolute;top: 10px;"> <strong>Trending Deales For You</strong></h5> <a href="#"> 
+            <span style="background-color:   rgb(38, 14, 173)  ; color: white;display: flex;align-items: center;justify-content: center;
+            border-radius: 50%;width: 28px;height: 28px;position: absolute;top: 13px;left: 280px;" class="glyphicon glyphicon-chevron-right" > </span></a>  
+        </div>
+       
+        <br><br> 
+        <br>
+         
+        {% for product in products %}
+        {% if loop.index ==38   %}
+        <div class="col-xs-6"   >
+          <a  href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">  
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive lar" alt="" style="height: 30vh;width: 50%; border-radius: 6px" >
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive min" alt="" style="height: 22vh;width: 100%; border-radius: 6px" >
+          <p style=" color: black;">{{product.name}}</p>
+            <h5 style="color: rgb(74, 235, 74)">From ₹{{product.price}}</h5></a></div>
+        {% elif loop.index ==39   %}
+        <div class="col-xs-6"    >
+          <a  href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">  
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive lar" alt="" style="height: 30vh;width: 50%; border-radius: 6px" >
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive min" alt="" style="height: 22vh;width: 100%; border-radius: 6px" >
+          <p style=" color: black;">{{product.name}}</p>
+            <h5 style="color: rgb(74, 235, 74)">From ₹{{product.price}}</h5></a>
+        </div>
+        {% endif %}
+        {% endfor %}
+         
+      </div>
+    </div>
+    <br>
+    <!--12 images-->
+    <div class="container-fluid">
+      <h5 style="margin-left: 10px;color: black;font-family: Verdana, Geneva, Tahoma, sans-serif;"> <strong>HIDDEN GEMS</strong></h5>
+      <h6 style="margin-left: 10px;color: black;font-family:cursive">Discover Your Love For These</h6>
+      {% for product in products %}
+      {% if loop.index ==40   %}
+      <div class="row" >
+        <div class="col-xs-3"  >
+          <a  href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">  
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive lar" alt="" style="height: 27vh;width: 70%; border-radius: 6px" >
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive min" alt="" style="height: 16vh;width: 100%; border-radius: 6px" >
+          <h6 style="color:black">{{product.name}} </h6></a>
+        </div>
+        {% elif loop.index ==41   %}
+        <div class="col-xs-3"  >
+          <a  href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">  
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive lar" alt="" style="height: 27vh;width: 70%; border-radius: 6px" >
+        <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive min" alt="" style="height: 16vh;width: 100%; border-radius: 6px" >
+          <h6 style="color:black">{{product.name}} </h6></a>
+        </div>
+        {% elif loop.index ==42   %}
+        <div class="col-xs-3"  >
+          <a  href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">  
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive lar" alt="" style="height: 27vh;width: 70%; border-radius: 6px" >
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive min" alt="" style="height: 16vh;width: 100%; border-radius: 6px" >
+          <h6 style="color:black">{{product.name}} </h6></a>
+        </div>
+        {% elif loop.index ==43   %}
+        <div class="col-xs-3"  >
+          <a  href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">  
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive lar" alt="" style="height: 27vh;width: 70%; border-radius: 6px" >
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive min" alt="" style="height: 16vh;width: 100%; border-radius: 6px" >
+          <h6 style="color:black">{{product.name}} </h6></a>
+        </div>
+      </div>
+
+      <!--row 2-->
+
+      <div class="row" >
+        {% elif loop.index ==44   %}
+        <div class="col-xs-3"  >
+          <a  href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">  
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive lar" alt="" style="height: 27vh;width: 70%; border-radius: 6px" >
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive min" alt="" style="height: 16vh;width: 100%; border-radius: 6px" >
+          <h6 style="color:black">{{product.name}} </h6></a>
+        </div>
+        {% elif loop.index ==45   %}
+        <div class="col-xs-3"  >
+          <a  href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">  
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive lar" alt="" style="height: 27vh;width: 70%; border-radius: 6px" >
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive min" alt="" style="height: 16vh;width: 100%; border-radius: 6px" >
+          <h6 style="color:black">{{product.name}} </h6></a>
+        </div>
+
+        {% elif loop.index ==46   %}
+        <div class="col-xs-3"  >
+          <a  href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">  
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive lar" alt="" style="height: 27vh;width: 70%; border-radius: 6px" >
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive min" alt="" style="height: 16vh;width: 100%; border-radius: 6px" >
+          <h6 style="color:black">{{product.name}} </h6></a>
+        </div>
+        {% elif loop.index ==47   %}
+        <div class="col-xs-3"  >
+          <a  href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">  
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive lar" alt="" style="height: 27vh;width: 70%; border-radius: 6px" >
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive min" alt="" style="height: 16vh;width: 100%; border-radius: 6px" >
+          <h6 style="color:black">{{product.name}} </h6></a>
+        </div>
+      </div>
+
+      <!--row 3-->
+      {% elif loop.index ==48   %}
+      <div class="row" >
+        <div class="col-xs-3"  >
+          <a  href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">  
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive lar" alt="" style="height: 27vh;width: 70%; border-radius: 6px" >
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive min" alt="" style="height: 16vh;width: 100%; border-radius: 6px" >
+          <h6 style="color:black">{{product.name}} </h6></a>
+        </div>
+        
+        {% elif loop.index ==49   %}
+        <div class="col-xs-3"  >
+          <a  href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">  
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive lar" alt="" style="height: 27vh;width: 70%; border-radius: 6px" >
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive min" alt="" style="height: 16vh;width: 100%; border-radius: 6px" >
+          <h6 style="color:black">{{product.name}} </h6></a>
+        </div>
+        {% elif loop.index ==50   %}
+        <div class="col-xs-3"  >
+          <a  href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">  
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive lar" alt="" style="height: 27vh;width: 70%; border-radius: 6px" >
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive min" alt="" style="height: 16vh;width: 100%; border-radius: 6px" >
+          <h6 style="color:black">{{product.name}} </h6></a>
+        </div>
+        {% elif loop.index ==65   %}
+        <div class="col-xs-3"  >
+          <a  href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">  
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive lar" alt="" style="height: 27vh;width: 70%; border-radius: 6px" >
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive min" alt="" style="height: 16vh;width: 100%; border-radius: 6px" >
+          <h6 style="color:black">{{product.name}} </h6></a>
+        </div>
+
+      </div>
+    </div>
+    {% endif %}
+	  {% endfor %}
+     
+    <br>
+    <!-- 1 images-->
+     
+    <br>
+    <!--top non color with (2) images-->
+    <div class="container-fluid">
+      <div class="row">
+	   
+        <div class="col-xs-12" style="background-color: rgb(255, 255, 255);">
+          <a href="#" style="display: flex;justify-content: space-between;align-items:center;text-decoration: none;">
+             <h5  style="color: rgb(17, 17, 17);margin-left: 20px;font-family: Arial, Helvetica, sans-serif;"> <strong>Most Wishlisted</strong></h5>
+             <span  style="background-color:  rgba(7, 7, 170, 0.856);color:rgb(255, 255, 255);  border-radius: 50%;width: 30px;height: 30px;display: flex;
+             align-items: center; justify-content: center;margin-right: 10px;" class="glyphicon glyphicon-chevron-right"></span></a>
+        </div>
+      </div>
+	   
+        <br>
+      <div class="row">
+        {% for product in products %}
+     {% if loop.index == 52 %}
+     <div class="col-xs-6"   >
+      <a  href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">  
+        <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive lar" alt="" style="height: 30vh;width: 50%; border-radius: 6px" >
+        <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive min" alt="" style="height: 22vh;width: 100%; border-radius: 6px" >
+      <p style=" color: black;">{{product.name}}</p>
+        <h5 style="color: rgb(74, 235, 74)">From ₹{{product.price}}</h5></a></div>
+		 
+        {% elif loop.index == 53 %}
+        <div class="col-xs-6"   >
+          <a  href="{{ url_for('product_details', product_id=product['id']) }}" style="text-decoration: none;">  
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive lar" alt="" style="height: 30vh;width: 50%; border-radius: 6px" >
+            <img src="{{ product['image'] }}"  class=" rounded mx-auto d-block  img-responsive min" alt="" style="height: 22vh;width: 100%; border-radius: 6px" >
+          <p style=" color: black;">{{product.name}}</p>
+            <h5 style="color: rgb(74, 235, 74)">From ₹{{product.price}}</h5></a></div>
+		    {% endif%}
+        {% endfor %}
+        
+		 
+      </div>
+    </div>
+     <br>
+
+      <!--1 image -->
+      
+      <div class="container">
+        <h5 style="color:black;margin-left: 15px;font-family: Arial, Helvetica, sans-serif;"><strong>New Normal</strong></h5>
+        <h6 style="color:black;margin-left: 15px;">Equip Yourself For Any Change</h6>
+         <div class="row">
+          <div class="col-xs-12">
+            <a href="/filter_args/study/laptop table" style="text-decoration: none;"> 
+            <img src="https://ik.imagekit.io/pve74zqrg/furn/workplace-5517744.jpg?updatedAt=1710394420540" class="img-responsive" style="height: 70vh;width: 100%;" alt="">
+            <h4 style="color: black;position: absolute;top: 20px;left: 40px;font-family: Verdana, Geneva, Tahoma, sans-serif;"><strong>Work From <br> Home like a <br>Boss!</strong></h4>
+            <h6  style="color: black;position: absolute;top: 90px;left: 40px;">Study Tables,Laptop Tables..</h6>
+            <button  type="button" class="btn btn-responsive" style="position: absolute;top: 120px;left: 40px;background-color: rgb(17, 42, 184);
+            color: rgb(255, 253, 253);width: 90px;height: 24px;display:flex;justify-content:space-between;  align-items: center;"  ><h6 >
+               From RS.699     </h6> </button>
+            </a>
+          </div>
+         </div>
+       </div>
+       
+       <br>
+  <!--prizes circle-->
+       <div class="container">
+        <h5 style="margin-left: 15px;color: black;font-family :Georgia, 'Times New Roman', Times, serif"> <strong>Year's Biggest Budget Buys</strong></h5>
+        <h6 style="margin-left: 15px;color: black;">Irresistible Prices for You</h6>
+        <div class="row">
+          <div class="col-xs-6" style="display: flex;align-items: center;justify-content: center;">
+            
+            <div class="circle" style="background-color: crimson; border-radius: 50%; height: 120px; width: 120px; text-align: center; display: flex; align-items: center; justify-content: center;">
+              <a href="/filter_furn/Mattress/sofa" style="text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                  <!--<h5 style="color: white; margin: 0;">EVERY THING</h5>-->
+                  <h4 style="color: white; margin: 0;"><strong>UNDER <br> RS.19999</strong></h4>
+                  <span style="background-color: rgb(238, 241, 14); color: rgb(2, 2, 2); display: inline-block; border-radius: 50%; width: 22px; height: 22px; line-height: 22px;"
+                  class="glyphicon glyphicon-chevron-right"><!--&gt;--></span>
+              </a>
+          </div>
+          
+
+             
+          </div>
+  
+          <div class="col-xs-6">
+          
+            
+            <div class="circle" style="  background-color: rgb(81, 9, 122); border-radius: 50%; height: 120px; width: 120px; text-align: center; display: flex; align-items: center; justify-content: center;">
+              <a href="/filter_furn1/table/beds" style="text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                  <!--<h5 style="color: white; margin: 0;">EVERY THING</h5>-->
+                  <h4 style="color: white; margin: 0;"><strong>UNDER <br> RS.1499</strong></h4>
+                  <span style="background-color: rgb(238, 241, 14); color: rgb(2, 2, 2); display: inline-block; border-radius: 50%; width: 22px; height: 22px; line-height: 22px;"
+                  class="glyphicon glyphicon-chevron-right"><!--&gt;--></span>
+              </a>
+          </div>
+
+             
+          </div>
+        </div>
+       </div>
+       <br>
+  
+       <!--2 images with text-->
+        
+       <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12" style="display: flex;align-items: center;justify-content: center;">
+            <img src="https://ik.imagekit.io/pve74zqrg/furn/all%20in%20one.jpg?updatedAt=1710394359962" alt="" class="img-responsive lar" style="width: 75%;height:77vh; border-radius: 4px">
+            <img src="https://ik.imagekit.io/pve74zqrg/furn/all%20in%20one.jpg?updatedAt=1710394359962" alt="" class="img-responsive min" style="width: 100%;height:47vh; border-radius: 4px">
+             
+            <a href="/filter_arguments/beds/sofas/wardrobes" style="text-decoration: none;"> <h3 style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;position: absolute;top: 30px;left: 228px;color: rgb(255, 255, 255);">  <br>
+               TOP <br>  RATED</h3>
+              <h6 class="lar" style="position: absolute;top: 120px;left: 228px;color: rgb(255, 255, 255);">Beds,Sofas,Wardrobes & more </h6>
+              <h6 class="min" style="position: absolute;top: 120px;left: 128px;color: rgb(255, 255, 255);">Beds,Sofas,Wardrobes & more </h6>
+                <button  type="button" class="btn btn-responsive" style="position: absolute;top: 160px;left: 228px;background-color: rgb(255, 255, 255);
+             width: 76px;height: 22px;display:flex;justify-content:center;  align-items: center; "  ><h6 style="color: rgb(16, 16, 179);">
+               Shop Now <span class="glyphicon glyphicon-chevron-right"> </span>   </h6> </button> </a> 
+          </div>
+       </div>
+        
+        <br>
+  
+       <!--3 frames-->
+      <div class="container-fluid">
+        <div class="col-xs-12">
+          <h4><strong>Explore Our Studio</strong>  </h4>
+          <h6>Favourites for you</h6>
+        </div>
+        
+        <!--living room-->
+        <div class="row">
+           
+          <div class="col-md-12" style="display: flex;align-items: center;justify-content: center;">
+             
+            <img src="https://ik.imagekit.io/pve74zqrg/furn/living%20room.jpg?updatedAt=1710394384403" alt="" class="img-responsive lar" style="width: 75%;height:77vh; border-radius: 4px">
+            <img src="https://ik.imagekit.io/pve74zqrg/furn/living%20room.jpg?updatedAt=1710394384403" alt="" class="img-responsive min" style="width: 100%;height:47vh; border-radius: 4px">
+            <a href="/filter_arguments/tv units/sofa/book shelfs" style="text-decoration: none;">
+              <h2 class="lar" style="font-family :'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;color: rgb(255, 252, 249);position: absolute;top:56px;left:208px;"> Living Room</h2>
+              <h2 class="min" style="font-family :'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;color: rgb(255, 252, 249);position: absolute;top:56px;left:108px;"> Living Room</h2>
+            <h6 class="lar" style="position: absolute;top: 99px;left: 228px;color: rgb(255, 252, 249);">350+ New styles Added</h6>
+            <h6 class="min" style="position: absolute;top: 99px;left: 128px;color: rgb(255, 252, 249);">350+ New styles Added</h6>
+           <!--<button  type="button" class="btn btn-responsive" style="position: absolute;top: 128px;left: 228px;background-color: rgb(255, 255, 255);
+            width: 76px;height: 22px;display:flex;justify-content:center;  align-items: center; "  ><h6 style="color: rgb(16, 16, 179);">
+            View All    </h6> </button>--> </a> 
+             
+            </div>
+        </div>
+        <br>
+        
+         
+         <!--bed room-->
+          
+        <div class="row"> 
+          <div class="col-md-12" style="display: flex;align-items: center;justify-content: center;">
+             
+             
+            <img src="https://ik.imagekit.io/pve74zqrg/furn/bed%20room.jpg?updatedAt=1710394359719" alt="" class="img-responsive lar" style="width: 75%;height:77vh; border-radius: 4px">
+            <img src="https://ik.imagekit.io/pve74zqrg/furn/bed%20room.jpg?updatedAt=1710394359719" alt="" class="img-responsive min" style="width: 100%;height:47vh; border-radius: 4px">
+            <a href="/filter_arguments/beds/Mattress/wardrobes" style="text-decoration: none;">
+              <h2 class="lar" style="font-family :'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; position: absolute; top:1px;left:228px;color: rgb(255, 252, 249);">Bedroom</h2>
+              <h2 class="min" style="font-family :'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; position: absolute; top:1px;left:128px;color: rgb(255, 252, 249);">Bedroom</h2>
+            <h6 class="lar" style=" position: absolute; top: 41px;left: 228px;color: rgb(255, 252, 249);">200+ New styles Added</h6>
+            <h6 class="min" style=" position: absolute; top: 41px;left: 128px;color: rgb(255, 252, 249);">200+ New styles Added</h6>
+           <!--<button  type="button" class="btn btn-responsive lar" style=" position: absolute; top: 68px;left: 228px;background-color: rgb(255, 255, 255);
+            width: 76px;height: 22px;display:flex;justify-content:center;  align-items: center; "  ><h6 style="color: rgb(16, 16, 179);">
+            View All    </h6> </button>--> </a> 
+             
+          </div>
+        </div>
+          <br>
+           
+         
+           
+          <!--dinning room-->
+          
+        <div class="row">
+
+           
+          <div class="col-md-12"  style="display: flex;align-items: center;justify-content: center;">
+            <img src="https://ik.imagekit.io/pve74zqrg/furn/dining.jpg?updatedAt=1710394399806" alt="" class="img-responsive lar" style="width: 75%;height:77vh; border-radius: 4px">
+            <img src="https://ik.imagekit.io/pve74zqrg/furn/dining.jpg?updatedAt=1710394399806" alt="" class="img-responsive min" style="width: 100%;height:47vh; border-radius: 4px">
+             
+            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+              <a href="/filter_args/stool/dining" style="text-decoration: none;"> 
+                    <h3 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;color: black;">Dining Room</h3>
+                    <h6 style="color: #070707;">250+ Styles Added</h6>
+                    <button type="button" class="btn btn-responsive" style=" background-color: #ffffff; width: 76px; height: 22px;display:flex;justify-content:center;  align-items: center;">
+                        <h6 style="color: #1010b3;">View All</h6>
+                    </button>
+                </a>
+            </div>
+        </div>
+        
+        </div>
+        <br>
+         
+         
+        <br>
+  
+         <!--kids room-->
+          
+         
+         <div class="row">
+          <div class="col-md-12" style="display: flex;align-items: center;justify-content: center;">
+            <img src="https://ik.imagekit.io/pve74zqrg/furn/kids%20room.jpg?updatedAt=1710394378923" alt="" class="img-responsive lar" style="width: 75%;height:77vh; border-radius: 4px">
+            <img src="https://ik.imagekit.io/pve74zqrg/furn/kids%20room.jpg?updatedAt=1710394378923" alt="" class="img-responsive min" style="width: 100%;height:47vh; border-radius: 4px">
+             
+            <a href="/filter_products/kid's room" style="text-decoration: none;"> 
+               <h3 class="lar" style="font-family :'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;position: absolute; top:45px;left:188px;color: rgb(15, 51, 170);">  <strong> Kid's Room</strong></h3>
+               <h3 class="min" style="font-family :'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;position: absolute; top:45px;left:108px;color: rgb(15, 51, 170);">  <strong> Kid's Room</strong></h3>
+               
+            <h6 class="lar" style=" position: absolute; top: 81px;left: 188px;;color:  rgb(16, 16, 179);"> 100+ Styles Added</h6>
+            <h6 class="min" style=" position: absolute; top: 81px;left: 108px;;color:  rgb(16, 16, 179);"> 100+ Styles Added</h6>
+           <button  type="button" class="btn btn-responsive" style=" position: absolute; top: 108px;;left: 188px;background-color: rgb(255, 255, 255);
+            width: 76px;height: 22px;display:flex;justify-content:center;  align-items: center; "  ><h6 style="color: rgb(16, 16, 179);">
+            View All    </h6> </button> </a> 
+             
+          </div>
+        </div>
+        <br>
+        <!--out door 
+        <div class="row">
+          <div class="col-md-12" style="display: flex;align-items: center;justify-content: center;">
+            {% for product in products %}
+            {% if loop.index ==64  %}
+            <img src="{{product.image}}" alt="" class="img-responsive" style="width: 50%;height:52vh; border-radius: 4px">
+            <a href="#"><h2 style="font-family :'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;position: absolute; top:30px;left:228px;color: rgb(255, 252, 249);"> {{product.name}}</h2>
+            <h6 style=" position: absolute; top: 81px;left: 28px;;color: rgb(255, 252, 249);">{{product.specifications}}</h6>
+           <button  type="button" class="btn btn-responsive" style=" position: absolute; top: 108px;;left: 28px;background-color: rgb(255, 255, 255);
+            width: 76px;height: 22px;display:flex;justify-content:center;  align-items: center; "  ><h6 style="color: rgb(16, 16, 179);">
+            View All    </h6> </button> </a> 
+            {% endif%}
+            {% endfor %}
+          </div>
+           
+        </div>-->
+        
+      </div>
+    <br>
+     
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+  var swiper = new Swiper('.swiper-container', {
+  loop: true,
+  autoplay:{delay:2500,disableOnInteraction:false}, // Enable loop mode
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+});
+ </script>
+
+<script>
+  
+  function handleSearchRedirect() {
+      var screenWidth = window.innerWidth;
+      var searchLink = document.getElementById('searchLink');
+      if (screenWidth < 768) { // For small screens
+          searchForm.removeAttribute('action');
+          searchLink.setAttribute('href', "{{ url_for('searchbar') }}");
+      } else { // For larger screens
+          searchLink.removeAttribute('href');
+      }
+  }
+
+  // Run the function on page load and window resize
+  document.addEventListener('DOMContentLoaded', handleSearchRedirect);
+  window.addEventListener('resize', handleSearchRedirect);
+
+
+</script>
+
+<script>
+// Function to handle form submission
+function validateSearchForm(event) {
+    var searchInput = document.getElementById('searchInput');
+    
+    // Check if the input field is empty
+    if (searchInput.value.trim() === '') {
+        event.preventDefault(); // Prevent form submission if input is empty
+    }
+}
+
+// Add event listener to the form for form submission validation
+document.getElementById('searchForm').addEventListener('submit', validateSearchForm);
+</script>
+
+    
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.min.js.js"></script>
+</body>
+</html>

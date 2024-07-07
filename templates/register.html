@@ -1,0 +1,60 @@
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Register</h1>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                <label for="username" class="form-control-label">Username</label>
+                <input type="text" name="username" id="username" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="email" class="form-control-label">Email</label>
+                <input type="email" name="email" id="email" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="password" class="form-control-label">Password</label>
+                <input type="password" name="password" id="password" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="confirm_password" class="form-control-label">Confirm Password</label>
+                <input type="password" name="confirm_password" id="confirm_password" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="phone_number" class="form-control-label">Phone Number</label>
+                <input type="tel" name="phone_number" id="phone_number" class="form-control">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        // Add JavaScript to validate the phone number
+        document.getElementById('phone_number').addEventListener('input', function () {
+            var phoneNumberInput = this.value;
+            var phoneHelp = document.getElementById('phoneHelp');
+    
+            if (phoneNumberInput.length === 10) {
+                phoneHelp.textContent = 'Phone number is valid.';
+            } else {
+                phoneHelp.textContent = 'Please enter a 10-digit phone number.';
+            }
+        });
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+ 

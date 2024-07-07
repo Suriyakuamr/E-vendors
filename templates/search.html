@@ -1,0 +1,85 @@
+ 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-vendors/Search</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        .card {
+            border-radius: 12px;
+            height: 55vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+         .big
+         {
+            display: block;
+         }
+         .small
+         {
+            display: none;
+         }
+
+        .card-title,
+        .card-text {
+            color: black;
+            text-align: center;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .card {
+                width: 100%;
+                margin-bottom: 20px; /* Adjust spacing between cards */
+            }
+            .big
+         {
+            display: none;
+         }
+         .small
+         {
+            display: block;
+         }
+
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 class="text-center" style="color: black; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Search Results</h2>
+    {% if search_query %}
+        <h4 class="text-center" style="color: black; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Showing results for: {{ search_query }}</h4>
+    {% endif %}
+
+    <div class="row">
+        {% for product in products %}
+            <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+                <div class="card">
+                    <a href="{{ url_for('product_details', product_id=product.id) }}" style="text-decoration: none;">
+                        <img class="img-responsive big" style="height: 30vh;width: 100%;" src="{{ product.image }}" alt="{{ product.name }}">
+                        <img class="img-responsive small" style="height: 26vh;width: 100%;" src="{{ product.image }}" alt="{{ product.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <h4 class="card-text">Price: RS.{{ product.price }}</h4>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>
+
+
+  
+
+ 
